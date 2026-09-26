@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Article — Godefroid Dika Liba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+<style>
+  :root{
+    --ink:#101B30; --paper:#FBF7EE; --paper-raised:#F1E9D6;
+    --gold:#CC9A3C; --clay:#B14730;
+    --char:#1B1712; --char-soft:#5B5346;
+    --line: rgba(27,23,18,0.14);
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#12100C; --paper-raised:#1A1712;
+      --char:#F1EAD9; --char-soft:#C3B89F;
+      --line: rgba(241,234,217,0.14);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12100C; --paper-raised:#1A1712;
+    --char:#F1EAD9; --char-soft:#C3B89F;
+    --line: rgba(241,234,217,0.14);
+  }
+  html{scroll-padding-top: env(safe-area-inset-top, 0px);}
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--char); font-family:'Public Sans', system-ui, sans-serif; font-size:17px; line-height:1.7; }
+  h1,h2,h3{font-family:'Fraunces', Georgia, serif;}
+  a{color:inherit;}
+  .wrap{max-width:720px; margin:0 auto; padding:0 28px;}
+  header{ padding-top: calc(20px + env(safe-area-inset-top,0px)); padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .wordmark{font-family:'Fraunces', serif; font-size:19px; font-weight:600;}
+  .wordmark span{color:var(--gold);}
+  .back{display:inline-block; margin-top:36px; font-size:14.5px; color:var(--char-soft); text-decoration:none;}
+  .back:hover{color:var(--gold);}
+  .art-date{font-size:14px; color:var(--char-soft); margin:28px 0 10px;}
+  h1.title{font-size:clamp(30px,5vw,42px); line-height:1.15; font-weight:500; margin:0 0 26px;}
+  .cover{width:100%; border-radius:16px; margin:0 0 34px; display:block;}
+  .body-content{font-size:18px; color:var(--char);}
+  .body-content p{margin:0 0 20px;}
+  .body-content h2{font-size:24px; margin:34px 0 14px;}
+  .body-content h3{font-size:20px; margin:28px 0 12px;}
+  .body-content a{color:var(--gold); text-decoration:underline;}
+  .body-content blockquote{ margin:24px 0; padding:4px 20px; border-left:3px solid var(--gold); color:var(--char-soft); font-style:italic; }
+  .not-found{padding:80px 0; text-align:center; color:var(--char-soft);}
+  footer{padding:50px 0 70px; border-top:1px solid var(--line); margin-top:50px; font-size:14px; color:var(--char-soft);}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <a href="index.html" style="text-decoration:none;"><div class="wordmark">Godefroid Dika Liba<span>.</span></div></a>
+</header>
+
+<div class="wrap">
+  <a href="index.html#articles" class="back">← Tous les articles</a>
+  <div id="content"><p class="not-found">Chargement…</p></div>
+</div>
+
+<footer class="wrap">
+  © 2026 Godefroid Dika Liba — <a href="mailto:godefroidschey@gmail.com" style="text-decoration:underline;">godefroidschey@gmail.com</a>
+</footer>
+
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var slug = params.get('slug');
+  var el = document.getElementById('content');
+
+  fetch('data/articles.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var articles = data.articles || [];
+      var art = articles.find(function(a){ return a.slug === slug; });
+      if(!art){
+        el.innerHTML = '<p class="not-found">Article introuvable.</p>';
+        return;
+      }
+      document.title = art.title + ' — Godefroid Dika Liba';
+      var html = '';
+      html += '<div class="art-date">' + (art.date || '') + '</div>';
+      html += '<h1 class="title">' + art.title + '</h1>';
+      if(art.image){ html += '<img class="cover" src="' + art.image + '" alt="">'; }
+      html += '<div class="body-content">' + marked.parse(art.body || '') + '</div>';
+      el.innerHTML = html;
+    })
+    .catch(function(){
+      el.innerHTML = '<p class="not-found">Impossible de charger l\'article.</p>';
+    });
+})();
+</script>
+
+</body>
+</html>
