@@ -21,6 +21,7 @@ collections:
               - { name: "title", label: "Titre", widget: "string" }
               - { name: "slug", label: "Identifiant URL (sans espace, ex: mon-article)", widget: "string" }
               - { name: "date", label: "Date", widget: "datetime", format: "DD MMM YYYY", date_format: "DD MMM YYYY" }
+              - { name: "author", label: "Signature auteur", widget: "string", default: "Godefroid Dika Liba, Doctorant en droit international privé" }
               - { name: "summary", label: "Résumé (1-2 phrases)", widget: "text" }
               - { name: "image", label: "Photo à la une", widget: "image", required: false }
               - { name: "body", label: "Contenu de l'article", widget: "markdown" }
