@@ -42,7 +42,8 @@
   .back{display:inline-block; margin-top:36px; font-size:14.5px; color:var(--char-soft); text-decoration:none;}
   .back:hover{color:var(--gold);}
   .art-date{font-size:14px; color:var(--char-soft); margin:28px 0 10px;}
-  h1.title{font-size:clamp(30px,5vw,42px); line-height:1.15; font-weight:500; margin:0 0 26px;}
+  h1.title{font-size:clamp(30px,5vw,42px); line-height:1.15; font-weight:500; margin:0 0 14px;}
+  .byline{font-size:15px; color:var(--gold); font-style:italic; margin:0 0 30px;}
   .cover{width:100%; border-radius:16px; margin:0 0 34px; display:block;}
   .body-content{font-size:18px; color:var(--char);}
   .body-content p{margin:0 0 20px;}
@@ -88,6 +89,7 @@
       var html = '';
       html += '<div class="art-date">' + (art.date || '') + '</div>';
       html += '<h1 class="title">' + art.title + '</h1>';
+      if(art.author){ html += '<div class="byline">Par ' + art.author + '</div>'; }
       if(art.image){ html += '<img class="cover" src="' + art.image + '" alt="">'; }
       html += '<div class="body-content">' + marked.parse(art.body || '') + '</div>';
       el.innerHTML = html;
