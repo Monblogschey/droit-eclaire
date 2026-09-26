@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "articles"
+    label: "Articles"
+    files:
+      - name: "articles"
+        label: "Tous les articles"
+        file: "data/articles.json"
+        fields:
+          - name: "articles"
+            label: "Articles"
+            widget: "list"
+            summary: "{{title}} — {{date}}"
+            fields:
+              - { name: "title", label: "Titre", widget: "string" }
+              - { name: "slug", label: "Identifiant URL (sans espace, ex: mon-article)", widget: "string" }
+              - { name: "date", label: "Date", widget: "datetime", format: "DD MMM YYYY", date_format: "DD MMM YYYY" }
+              - { name: "summary", label: "Résumé (1-2 phrases)", widget: "text" }
+              - { name: "image", label: "Photo à la une", widget: "image", required: false }
+              - { name: "body", label: "Contenu de l'article", widget: "markdown" }
