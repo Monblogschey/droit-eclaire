@@ -40,8 +40,9 @@ a{color:inherit}
   padding:0 24px;
 }
 
-header{
+header.site{
   border-bottom:1px solid var(--line);
+  position:relative;
 }
 
 .masthead{
@@ -60,20 +61,79 @@ header{
   color:var(--ink);
 }
 
-nav{
+nav.main{
   display:flex;
   gap:26px;
 }
 
-nav a{
+nav.main a{
   text-decoration:none;
   font-weight:600;
   font-size:14.5px;
   color:var(--ink);
+  padding:4px 0;
+  border-bottom:1px solid transparent;
 }
 
-nav a:hover{
+nav.main a:hover{
   color:var(--accent);
+  border-color:var(--accent);
+}
+
+details.mobile-nav{display:none;}
+
+@media (max-width:700px){
+  nav.main{display:none;}
+  details.mobile-nav{display:block;}
+  details.mobile-nav summary{
+    list-style:none;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-family:var(--sans);
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    padding:4px 0;
+    border:0;
+    background:none;
+  }
+  details.mobile-nav summary::-webkit-details-marker{display:none;}
+  details.mobile-nav summary::after{
+    content:"";
+    width:6px;
+    height:6px;
+    border-right:1.5px solid var(--accent);
+    border-bottom:1.5px solid var(--accent);
+    transform:rotate(45deg);
+    margin-top:-3px;
+    transition:transform .15s ease;
+  }
+  details.mobile-nav[open] summary::after{transform:rotate(-135deg); margin-top:3px;}
+  details.mobile-nav .panel{
+    position:absolute;
+    left:0;
+    right:0;
+    top:100%;
+    background:#FFFFFF;
+    border-bottom:1px solid var(--line);
+    box-shadow:0 10px 20px rgba(11,37,69,.06);
+    padding:4px 24px 10px;
+    z-index:60;
+  }
+  details.mobile-nav .panel a{
+    display:block;
+    padding:11px 0;
+    text-decoration:none;
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+  details.mobile-nav .panel a:last-child{border-bottom:0;}
 }
 
 .article{
@@ -160,6 +220,35 @@ h1{
   color:var(--accent);
 }
 
+.related{
+  margin-top:56px;
+  padding-top:28px;
+  border-top:1px solid var(--line);
+}
+
+.related p.label{
+  margin:0 0 14px;
+  font-size:12.5px;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+.related a{
+  display:block;
+  padding:14px 0;
+  text-decoration:none;
+  font-family:var(--serif);
+  font-size:19px;
+  color:var(--ink);
+  border-top:1px solid var(--line);
+}
+
+.related a:hover{
+  color:var(--accent);
+}
+
 .source-link{
   margin:0 0 30px;
 }
@@ -193,10 +282,8 @@ footer{
 }
 
 @media(max-width:700px){
-  nav{display:none}
-
   .article{
-    padding-top:50px;
+    padding-top:36px;
   }
 
   .content{
@@ -208,11 +295,11 @@ footer{
 
 <body>
 
-<header>
+<header class="site">
   <div class="wrap masthead">
     <a class="brand" href="/">Godefroid Dika Liba</a>
 
-    <nav>
+    <nav class="main" aria-label="Navigation principale">
       <a href="reflexions.html">Réflexions</a>
       <a href="reflexions.html?cat=nationalite">Nationalité</a>
       <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
@@ -220,6 +307,18 @@ footer{
       <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
       <a href="a-propos.html">À propos</a>
     </nav>
+
+    <details class="mobile-nav">
+      <summary>Menu</summary>
+      <div class="panel">
+        <a href="reflexions.html">Réflexions</a>
+        <a href="reflexions.html?cat=nationalite">Nationalité</a>
+        <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+        <a href="reflexions.html?cat=diaspora">Diaspora</a>
+        <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
+        <a href="a-propos.html">À propos</a>
+      </div>
+    </details>
   </div>
 </header>
 
@@ -277,7 +376,7 @@ footer{
       }
 
       if(article.sourceUrl){
-        html += '<p class="source-link"><a href="' + article.sourceUrl + '" target="_blank" rel="noopener">Voir la publication originale →</a></p>';
+        html += '<p class="source-link"><a href="' + article.sourceUrl + '" target="_blank" rel="noopener">Publication originale ↗</a></p>';
       }
 
       if(article.image){
@@ -295,6 +394,22 @@ footer{
       });
 
       html += '</div>';
+
+      if(article.category){
+        var others = (data.articles || []).filter(function(a){
+          return a.category === article.category && a.slug !== article.slug;
+        });
+        if(others.length){
+          html += '<div class="related">';
+          html += '<p class="label">Dans la même thématique</p>';
+          others.forEach(function(a){
+            html += '<a href="article.html?slug=' + encodeURIComponent(a.slug) + '">' + a.title + '</a>';
+          });
+          html += '</div>';
+        }
+      }
+
+      html += '<a class="back" style="margin-top:36px;" href="reflexions.html">← Toutes les réflexions</a>';
 
       root.innerHTML = html;
     })

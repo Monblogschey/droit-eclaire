@@ -99,36 +99,48 @@ details.mobile-nav{display:none;}
   details.mobile-nav summary{
     list-style:none;
     cursor:pointer;
-    font-weight:700;
-    font-size:14.5px;
-    color:var(--ink);
-    border:1px solid var(--line);
-    border-radius:2px;
-    padding:9px 16px;
     display:inline-flex;
     align-items:center;
-    gap:8px;
+    gap:7px;
+    font-family:var(--sans);
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    padding:4px 0;
+    border:0;
+    background:none;
   }
   details.mobile-nav summary::-webkit-details-marker{display:none;}
-  details.mobile-nav summary::after{content:"+"; font-size:16px; line-height:1; color:var(--accent);}
-  details.mobile-nav[open] summary::after{content:"–";}
+  details.mobile-nav summary::after{
+    content:"";
+    width:6px;
+    height:6px;
+    border-right:1.5px solid var(--accent);
+    border-bottom:1.5px solid var(--accent);
+    transform:rotate(45deg);
+    margin-top:-3px;
+    transition:transform .15s ease;
+  }
+  details.mobile-nav[open] summary::after{transform:rotate(-135deg); margin-top:3px;}
   details.mobile-nav .panel{
     position:absolute;
     left:0;
     right:0;
-    top:72px;
+    top:100%;
     background:#FFFFFF;
     border-bottom:1px solid var(--line);
-    box-shadow:0 12px 24px rgba(11,37,69,.08);
-    padding:8px 24px 18px;
+    box-shadow:0 10px 20px rgba(11,37,69,.06);
+    padding:4px 24px 10px;
     z-index:60;
   }
   details.mobile-nav .panel a{
     display:block;
-    padding:13px 0;
+    padding:11px 0;
     text-decoration:none;
     font-weight:600;
-    font-size:16px;
+    font-size:15px;
     color:var(--ink);
     border-bottom:1px solid var(--line);
   }
@@ -401,6 +413,13 @@ h1{
   font-size:15px;
 }
 
+.publication-links{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
+}
+
 .publication a.read{
   text-decoration:none;
   font-size:14px;
@@ -409,8 +428,22 @@ h1{
   white-space:nowrap;
 }
 
+.publication a.read.ext{
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+}
+
 .publication a.read:hover{
   color:var(--accent);
+}
+
+@media(max-width:900px){
+  .publication-links{
+    flex-direction:row;
+    align-items:center;
+    gap:22px;
+  }
 }
 
 .all-link{
@@ -511,23 +544,53 @@ footer.site{
     width:100%;
   }
 
+  .masthead{
+    padding:14px 0;
+  }
+
   .hero{
-    padding:68px 0 60px;
+    padding:44px 0 44px;
   }
 
   h1{
-    font-size:46px;
+    font-size:40px;
   }
 
   .baseline{
-    font-size:21px;
+    font-size:19px;
+    margin-top:22px;
+  }
+
+  .origin{
+    margin-top:18px;
+  }
+
+  .manifesto{
+    padding:48px 0;
   }
 
   .method,
   .themes,
   .publications,
   .closing{
-    padding:60px 0;
+    padding:46px 0;
+  }
+
+  .section-title{
+    margin-bottom:28px;
+    font-size:30px;
+  }
+
+  .pillar{
+    padding:26px 0;
+  }
+
+  .theme{
+    padding:26px 0 28px;
+  }
+
+  .theme:nth-child(even){
+    padding-left:0;
   }
 }
 </style>
@@ -794,9 +857,15 @@ footer.site{
         html += '<p>' + esc(article.summary || '') + '</p>';
         html += '</div>';
 
+        html += '<div class="publication-links">';
         html += '<a class="read" href="article.html?slug=' +
           encodeURIComponent(article.slug) +
           '">Lire →</a>';
+        if(article.sourceUrl){
+          html += '<a class="read ext" href="' + esc(article.sourceUrl) +
+            '" target="_blank" rel="noopener">Publication originale ↗</a>';
+        }
+        html += '</div>';
 
         html += '</article>';
       });
