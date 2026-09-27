@@ -4,101 +4,398 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Article — Godefroid Dika Liba</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340..700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+
 <style>
-  :root{
-    --ink:#101B30; --paper:#FBF7EE; --paper-raised:#F1E9D6;
-    --gold:#CC9A3C; --clay:#B14730;
-    --char:#1B1712; --char-soft:#5B5346;
-    --line: rgba(27,23,18,0.14);
-    box-sizing:border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+:root{
+  --ink:#101B30;
+  --ink2:#1C2B4A;
+  --paper:#FBF7EE;
+  --paper-raised:#F1E9D6;
+  --gold:#CC9A3C;
+  --gold-soft:#E9C77A;
+  --clay:#B14730;
+  --char:#1B1712;
+  --char-soft:#5B5346;
+  --line:rgba(27,23,18,0.14);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#12100C;
+    --paper-raised:#1A1712;
+    --char:#F1EAD9;
+    --char-soft:#C3B89F;
+    --line:rgba(241,234,217,0.14);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --paper:#12100C; --paper-raised:#1A1712;
-      --char:#F1EAD9; --char-soft:#C3B89F;
-      --line: rgba(241,234,217,0.14);
-    }
+}
+
+*{box-sizing:border-box;}
+
+html{
+  scroll-padding-top:80px;
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--char);
+  font-family:'Public Sans',system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.7;
+}
+
+h1,h2,h3{
+  font-family:'Fraunces',Georgia,serif;
+}
+
+a{color:inherit;}
+
+.wrap{
+  max-width:1040px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:40;
+  padding-top:calc(18px + env(safe-area-inset-top,0px));
+  padding-bottom:18px;
+  background:color-mix(in srgb,var(--paper) 82%,transparent);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+
+.masthead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.wordmark{
+  font-family:'Fraunces',serif;
+  font-size:20px;
+  font-weight:600;
+}
+
+.wordmark span{color:var(--gold);}
+
+nav{
+  display:flex;
+  align-items:center;
+  font-size:15px;
+}
+
+nav a{
+  text-decoration:none;
+  margin-left:30px;
+  border-bottom:1px solid transparent;
+  padding-bottom:2px;
+}
+
+nav a:first-child{margin-left:0;}
+
+nav a:hover{
+  border-color:var(--gold);
+}
+
+nav a.cta{
+  margin-left:30px;
+  padding:9px 18px;
+  border-radius:100px;
+  background:var(--gold);
+  color:#171310;
+  border:none;
+  font-weight:600;
+}
+
+.article-wrap{
+  max-width:900px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+.back{
+  display:inline-block;
+  margin-top:44px;
+  font-size:14.5px;
+  color:var(--char-soft);
+  text-decoration:none;
+}
+
+.back:hover{color:var(--gold);}
+
+.article-header{
+  padding:42px 0 38px;
+  border-bottom:1px solid var(--line);
+}
+
+.kicker{
+  font-size:13.5px;
+  color:var(--gold);
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+.art-date{
+  font-size:14px;
+  color:var(--char-soft);
+  margin-bottom:12px;
+}
+
+h1.title{
+  font-size:clamp(38px,5.2vw,62px);
+  line-height:1.06;
+  font-weight:500;
+  letter-spacing:-.01em;
+  margin:0 0 20px;
+  max-width:16ch;
+}
+
+.byline{
+  font-size:15px;
+  color:var(--char-soft);
+  margin:0;
+}
+
+.cover{
+  width:100%;
+  max-height:520px;
+  object-fit:cover;
+  border-radius:24px;
+  margin:42px 0 44px;
+  display:block;
+}
+
+.body-content{
+  max-width:760px;
+  font-size:18px;
+}
+
+.body-content p{
+  margin:0 0 22px;
+}
+
+.body-content h2{
+  font-size:30px;
+  font-weight:500;
+  margin:42px 0 16px;
+}
+
+.body-content h3{
+  font-size:23px;
+  font-weight:500;
+  margin:34px 0 14px;
+}
+
+.body-content a{
+  color:var(--gold);
+  text-decoration:underline;
+}
+
+.body-content blockquote{
+  margin:30px 0;
+  padding:6px 22px;
+  border-left:3px solid var(--gold);
+  color:var(--char-soft);
+  font-style:italic;
+}
+
+.not-found{
+  padding:100px 0;
+  text-align:center;
+  color:var(--char-soft);
+}
+
+footer{
+  max-width:1040px;
+  margin:70px auto 0;
+  padding:52px 28px 64px;
+  border-top:1px solid var(--line);
+}
+
+.footer-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+  font-size:14px;
+  color:var(--char-soft);
+}
+
+.footer-meta a{
+  text-decoration:underline;
+  text-decoration-color:var(--line);
+}
+
+@media(max-width:600px){
+  .wrap,
+  .article-wrap{
+    padding-left:20px;
+    padding-right:20px;
   }
-  :root[data-theme="dark"]{
-    --paper:#12100C; --paper-raised:#1A1712;
-    --char:#F1EAD9; --char-soft:#C3B89F;
-    --line: rgba(241,234,217,0.14);
+
+  .wordmark{font-size:17px;}
+
+  nav{
+    font-size:13.5px;
   }
-  html{scroll-padding-top: env(safe-area-inset-top, 0px);}
-  *{box-sizing:border-box;}
-  body{ margin:0; background:var(--paper); color:var(--char); font-family:'Public Sans', system-ui, sans-serif; font-size:17px; line-height:1.7; }
-  h1,h2,h3{font-family:'Fraunces', Georgia, serif;}
-  a{color:inherit;}
-  .wrap{max-width:720px; margin:0 auto; padding:0 28px;}
-  header{ padding-top: calc(20px + env(safe-area-inset-top,0px)); padding-bottom:18px; border-bottom:1px solid var(--line);}
-  .wordmark{font-family:'Fraunces', serif; font-size:19px; font-weight:600;}
-  .wordmark span{color:var(--gold);}
-  .back{display:inline-block; margin-top:36px; font-size:14.5px; color:var(--char-soft); text-decoration:none;}
-  .back:hover{color:var(--gold);}
-  .art-date{font-size:14px; color:var(--char-soft); margin:28px 0 10px;}
-  h1.title{font-size:clamp(30px,5vw,42px); line-height:1.15; font-weight:500; margin:0 0 14px;}
-  .byline{font-size:15px; color:var(--gold); font-style:italic; margin:0 0 30px;}
-  .cover{width:100%; border-radius:16px; margin:0 0 34px; display:block;}
-  .body-content{font-size:18px; color:var(--char);}
-  .body-content p{margin:0 0 20px;}
-  .body-content h2{font-size:24px; margin:34px 0 14px;}
-  .body-content h3{font-size:20px; margin:28px 0 12px;}
-  .body-content a{color:var(--gold); text-decoration:underline;}
-  .body-content blockquote{ margin:24px 0; padding:4px 20px; border-left:3px solid var(--gold); color:var(--char-soft); font-style:italic; }
-  .not-found{padding:80px 0; text-align:center; color:var(--char-soft);}
-  footer{padding:50px 0 70px; border-top:1px solid var(--line); margin-top:50px; font-size:14px; color:var(--char-soft);}
+
+  nav a{
+    margin-left:16px;
+  }
+
+  nav a.cta{
+    padding:8px 14px;
+  }
+
+  .article-header{
+    padding-top:34px;
+  }
+
+  h1.title{
+    font-size:38px;
+  }
+
+  .cover{
+    border-radius:18px;
+    margin-top:30px;
+  }
+
+  .body-content{
+    font-size:17px;
+  }
+
+  footer{
+    padding-left:20px;
+    padding-right:20px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <header class="wrap">
-  <a href="index.html" style="text-decoration:none;"><div class="wordmark">Godefroid Dika Liba<span>.</span></div></a>
+  <div class="masthead">
+    <a href="index.html" style="text-decoration:none;">
+      <div class="wordmark">Godefroid Dika Liba<span>.</span></div>
+    </a>
+
+    <nav>
+      <a href="reflexions.html">Réflexions</a>
+      <a href="index.html#apropos">À propos</a>
+      <a href="index.html#contact" class="cta">Me contacter</a>
+    </nav>
+  </div>
 </header>
 
-<div class="wrap">
-  <a href="index.html#articles" class="back">← Tous les articles</a>
-  <div id="content"><p class="not-found">Chargement…</p></div>
-</div>
+<main class="article-wrap">
 
-<footer class="wrap">
-  © 2026 Godefroid Dika Liba — <a href="mailto:godefroidschey@gmail.com" style="text-decoration:underline;">godefroidschey@gmail.com</a>
+  <a href="reflexions.html" class="back">← Toutes les réflexions</a>
+
+  <div id="content">
+    <p class="not-found">Chargement…</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-meta">
+    <a href="mailto:godefroidschey@gmail.com">godefroidschey@gmail.com</a>
+    <span>© 2026 Godefroid Dika Liba</span>
+  </div>
 </footer>
 
 <script>
 (function(){
+
   var params = new URLSearchParams(window.location.search);
   var slug = params.get('slug');
   var el = document.getElementById('content');
 
   fetch('data/articles.json')
-    .then(function(r){ return r.json(); })
+    .then(function(r){
+      if(!r.ok) throw new Error('Impossible de charger les articles');
+      return r.json();
+    })
     .then(function(data){
+
       var articles = data.articles || [];
-      var art = articles.find(function(a){ return a.slug === slug; });
+
+      var art = articles.find(function(a){
+        return a.slug === slug;
+      });
+
       if(!art){
         el.innerHTML = '<p class="not-found">Article introuvable.</p>';
         return;
       }
+
       document.title = art.title + ' — Godefroid Dika Liba';
+
       var html = '';
-      html += '<div class="art-date">' + (art.date || '') + '</div>';
-      html += '<h1 class="title">' + art.title + '</h1>';
-      if(art.author){ html += '<div class="byline">Par ' + art.author + '</div>'; }
-      if(art.image){ html += '<img class="cover" src="' + art.image + '" alt="">'; }
-      html += '<div class="body-content">' + marked.parse(art.body || '') + '</div>';
+
+      html += '<div class="article-header">';
+
+      html += '<div class="kicker">Réflexion</div>';
+
+      html += '<div class="art-date">' +
+        (art.date || '') +
+        '</div>';
+
+      html += '<h1 class="title">' +
+        art.title +
+        '</h1>';
+
+      if(art.author){
+        html += '<div class="byline">Par ' +
+          art.author +
+          '</div>';
+      }
+
+      html += '</div>';
+
+      if(art.image){
+        html += '<img class="cover" src="' +
+          art.image +
+          '" alt="">';
+      }
+
+      html += '<div class="body-content">' +
+        marked.parse(art.body || '') +
+        '</div>';
+
       el.innerHTML = html;
     })
     .catch(function(){
-      el.innerHTML = '<p class="not-found">Impossible de charger l\'article.</p>';
+
+      el.innerHTML =
+        '<p class="not-found">Impossible de charger l’article.</p>';
+
     });
+
 })();
 </script>
-<script data-goatcounter="https://droit-eclaire.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<script data-goatcounter="https://droit-eclaire.goatcounter.com/count"
+async src="//gc.zgo.at/count.js"></script>
+
 </body>
 </html>
