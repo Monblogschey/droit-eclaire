@@ -91,6 +91,51 @@ nav.main a:hover{
   border-color:var(--accent);
 }
 
+details.mobile-nav{display:none;}
+
+@media (max-width:900px){
+  nav.main{display:none;}
+  details.mobile-nav{display:block;}
+  details.mobile-nav summary{
+    list-style:none;
+    cursor:pointer;
+    font-weight:700;
+    font-size:14.5px;
+    color:var(--ink);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:9px 16px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  details.mobile-nav summary::-webkit-details-marker{display:none;}
+  details.mobile-nav summary::after{content:"+"; font-size:16px; line-height:1; color:var(--accent);}
+  details.mobile-nav[open] summary::after{content:"–";}
+  details.mobile-nav .panel{
+    position:absolute;
+    left:0;
+    right:0;
+    top:72px;
+    background:#FFFFFF;
+    border-bottom:1px solid var(--line);
+    box-shadow:0 12px 24px rgba(11,37,69,.08);
+    padding:8px 24px 18px;
+    z-index:60;
+  }
+  details.mobile-nav .panel a{
+    display:block;
+    padding:13px 0;
+    text-decoration:none;
+    font-weight:600;
+    font-size:16px;
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+  details.mobile-nav .panel a:last-child{border-bottom:0;}
+  header.site{position:relative;}
+}
+
 /* HERO */
 
 .hero{
@@ -434,10 +479,6 @@ footer.site{
     padding:18px 0;
   }
 
-  nav.main{
-    gap:14px;
-  }
-
   .pillars{
     grid-template-columns:1fr;
   }
@@ -468,14 +509,6 @@ footer.site{
 
   .brand{
     width:100%;
-  }
-
-  nav.main{
-    justify-content:flex-start;
-  }
-
-  nav.main a{
-    font-size:12.5px;
   }
 
   .hero{
@@ -515,6 +548,18 @@ footer.site{
       <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
       <a href="a-propos.html">À propos</a>
     </nav>
+
+    <details class="mobile-nav">
+      <summary>Menu</summary>
+      <div class="panel">
+        <a href="reflexions.html">Réflexions</a>
+        <a href="reflexions.html?cat=nationalite">Nationalité</a>
+        <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+        <a href="reflexions.html?cat=diaspora">Diaspora</a>
+        <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
+        <a href="a-propos.html">À propos</a>
+      </div>
+    </details>
 
   </div>
 </header>
