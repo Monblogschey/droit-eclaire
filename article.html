@@ -122,6 +122,7 @@ h1{
 .content{
   font-size:18px;
   line-height:1.8;
+  overflow-wrap:anywhere;
 }
 
 .content p{
@@ -157,6 +158,23 @@ h1{
 
 .back:hover{
   color:var(--accent);
+}
+
+.source-link{
+  margin:0 0 30px;
+}
+
+.source-link a{
+  color:var(--accent);
+  font-weight:600;
+  font-size:14.5px;
+  text-decoration:none;
+  border-bottom:1px solid currentColor;
+  padding-bottom:1px;
+}
+
+.source-link a:hover{
+  color:var(--ink);
 }
 
 footer{
@@ -196,10 +214,10 @@ footer{
 
     <nav>
       <a href="reflexions.html">Réflexions</a>
-      <a href="/#axis-nationalite">Nationalité</a>
-      <a href="/#axis-citoyennete">Citoyenneté</a>
-      <a href="/#axis-diaspora">Diaspora</a>
-      <a href="/#axis-regards">Regards d'Afrique</a>
+      <a href="reflexions.html?cat=nationalite">Nationalité</a>
+      <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+      <a href="reflexions.html?cat=diaspora">Diaspora</a>
+      <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
       <a href="a-propos.html">À propos</a>
     </nav>
   </div>
@@ -217,7 +235,7 @@ footer{
   <div class="wrap footer-inner">
     <span>Godefroid Dika Liba</span>
     <a href="mailto:godefroidschey@gmail.com">godefroidschey@gmail.com</a>
-    <span>© 2026 · <a href="mentions-legales.html">Mentions légales</a></span></span>
+    <span>© 2026 · <a href="mentions-legales.html">Mentions légales</a></span>
   </div>
 </footer>
 
@@ -244,12 +262,22 @@ footer{
 
       var html = '';
 
-      html += '<div class="eyebrow">Réflexion</div>';
+      var parts = [];
+      if(article.category){ parts.push(article.category); }
+      if(article.type){ parts.push(article.type); }
+      if(article.source){ parts.push(article.source); }
+      var eyebrowText = parts.length ? parts.join(' · ') : 'Réflexion';
+
+      html += '<div class="eyebrow">' + eyebrowText + '</div>';
       html += '<div class="date">' + (article.date || '') + '</div>';
       html += '<h1>' + article.title + '</h1>';
 
       if(article.author){
         html += '<div class="byline">Par ' + article.author + '</div>';
+      }
+
+      if(article.sourceUrl){
+        html += '<p class="source-link"><a href="' + article.sourceUrl + '" target="_blank" rel="noopener">Voir la publication originale →</a></p>';
       }
 
       if(article.image){
