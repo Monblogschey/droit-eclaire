@@ -140,15 +140,68 @@ footer.site .fname{
 }
 footer.site a{text-decoration:none}
 
-@media(max-width:900px){
-  nav.main{gap:14px;flex-wrap:wrap;justify-content:flex-end}
+details.mobile-nav{display:none;}
+
+@media (max-width:900px){
+  nav.main{display:none;}
+  details.mobile-nav{display:block;}
+  details.mobile-nav summary{
+    list-style:none;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-weight:700;
+    font-size:12.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    padding:6px 0;
+    border:0;
+    background:none;
+  }
+  details.mobile-nav summary::-webkit-details-marker{display:none;}
+  details.mobile-nav summary::after{
+    content:"";
+    width:6px;
+    height:6px;
+    border-right:1.5px solid var(--accent);
+    border-bottom:1.5px solid var(--accent);
+    transform:rotate(45deg);
+    position:relative;
+    top:-1px;
+    transition:transform .15s ease;
+  }
+  details.mobile-nav[open] summary::after{transform:rotate(-135deg); top:2px;}
+  details.mobile-nav .panel{
+    position:absolute;
+    left:0;
+    right:0;
+    top:100%;
+    background:#FFFFFF;
+    border-bottom:1px solid var(--line);
+    box-shadow:0 12px 22px rgba(11,37,69,.07);
+    padding:10px 24px 16px;
+    z-index:60;
+  }
+  details.mobile-nav .panel a{
+    display:block;
+    padding:13px 0;
+    text-decoration:none;
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+  details.mobile-nav .panel a:last-child{border-bottom:0;}
+  header.site{position:relative;}
 }
+
 @media(max-width:720px){
-  .masthead{align-items:flex-start;padding:18px 0}
-  nav.main{font-size:13px}
-  nav.main a{font-size:13px}
-  .hero{padding:56px 0 40px}
-  .content{padding:40px 0 60px}
+  .masthead{padding:14px 0}
+  .hero{padding:44px 0 32px}
+  .content{padding:32px 0 48px}
 }
 </style>
 </head>
@@ -167,6 +220,18 @@ footer.site a{text-decoration:none}
       <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
       <a href="a-propos.html" aria-current="page">À propos</a>
     </nav>
+
+    <details class="mobile-nav">
+      <summary>Menu</summary>
+      <div class="panel">
+        <a href="reflexions.html">Réflexions</a>
+        <a href="reflexions.html?cat=nationalite">Nationalité</a>
+        <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+        <a href="reflexions.html?cat=diaspora">Diaspora</a>
+        <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
+        <a href="a-propos.html" aria-current="page">À propos</a>
+      </div>
+    </details>
   </div>
 </header>
 

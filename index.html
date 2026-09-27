@@ -101,14 +101,14 @@ details.mobile-nav{display:none;}
     cursor:pointer;
     display:inline-flex;
     align-items:center;
-    gap:7px;
+    gap:8px;
     font-family:var(--sans);
     font-weight:700;
     font-size:12.5px;
     letter-spacing:.08em;
     text-transform:uppercase;
     color:var(--ink);
-    padding:4px 0;
+    padding:6px 0;
     border:0;
     background:none;
   }
@@ -120,10 +120,11 @@ details.mobile-nav{display:none;}
     border-right:1.5px solid var(--accent);
     border-bottom:1.5px solid var(--accent);
     transform:rotate(45deg);
-    margin-top:-3px;
+    position:relative;
+    top:-1px;
     transition:transform .15s ease;
   }
-  details.mobile-nav[open] summary::after{transform:rotate(-135deg); margin-top:3px;}
+  details.mobile-nav[open] summary::after{transform:rotate(-135deg); top:2px;}
   details.mobile-nav .panel{
     position:absolute;
     left:0;
@@ -131,13 +132,13 @@ details.mobile-nav{display:none;}
     top:100%;
     background:#FFFFFF;
     border-bottom:1px solid var(--line);
-    box-shadow:0 10px 20px rgba(11,37,69,.06);
-    padding:4px 24px 10px;
+    box-shadow:0 12px 22px rgba(11,37,69,.07);
+    padding:10px 24px 16px;
     z-index:60;
   }
   details.mobile-nav .panel a{
     display:block;
-    padding:11px 0;
+    padding:13px 0;
     text-decoration:none;
     font-weight:600;
     font-size:15px;
@@ -151,7 +152,7 @@ details.mobile-nav{display:none;}
 /* HERO */
 
 .hero{
-  padding:105px 0 90px;
+  padding:105px 0 86px;
 }
 
 .hero-inner{
@@ -225,7 +226,7 @@ h1{
 .manifesto{
   background:var(--ink);
   color:white;
-  padding:74px 0;
+  padding:80px 0 84px;
 }
 
 .manifesto .small{
@@ -253,7 +254,7 @@ h1{
 /* METHOD */
 
 .method{
-  padding:82px 0;
+  padding:88px 0 82px;
   border-bottom:1px solid var(--line);
 }
 
@@ -549,7 +550,7 @@ footer.site{
   }
 
   .hero{
-    padding:44px 0 44px;
+    padding:44px 0 38px;
   }
 
   h1{
@@ -566,10 +567,13 @@ footer.site{
   }
 
   .manifesto{
-    padding:48px 0;
+    padding:50px 0 46px;
   }
 
-  .method,
+  .method{
+    padding:52px 0 46px;
+  }
+
   .themes,
   .publications,
   .closing{

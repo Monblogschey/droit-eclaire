@@ -82,7 +82,7 @@ nav.main a:hover{
 
 details.mobile-nav{display:none;}
 
-@media (max-width:700px){
+@media (max-width:900px){
   nav.main{display:none;}
   details.mobile-nav{display:block;}
   details.mobile-nav summary{
@@ -90,14 +90,14 @@ details.mobile-nav{display:none;}
     cursor:pointer;
     display:inline-flex;
     align-items:center;
-    gap:7px;
+    gap:8px;
     font-family:var(--sans);
     font-weight:700;
     font-size:12.5px;
     letter-spacing:.08em;
     text-transform:uppercase;
     color:var(--ink);
-    padding:4px 0;
+    padding:6px 0;
     border:0;
     background:none;
   }
@@ -109,10 +109,11 @@ details.mobile-nav{display:none;}
     border-right:1.5px solid var(--accent);
     border-bottom:1.5px solid var(--accent);
     transform:rotate(45deg);
-    margin-top:-3px;
+    position:relative;
+    top:-1px;
     transition:transform .15s ease;
   }
-  details.mobile-nav[open] summary::after{transform:rotate(-135deg); margin-top:3px;}
+  details.mobile-nav[open] summary::after{transform:rotate(-135deg); top:2px;}
   details.mobile-nav .panel{
     position:absolute;
     left:0;
@@ -120,13 +121,13 @@ details.mobile-nav{display:none;}
     top:100%;
     background:#FFFFFF;
     border-bottom:1px solid var(--line);
-    box-shadow:0 10px 20px rgba(11,37,69,.06);
-    padding:4px 24px 10px;
+    box-shadow:0 12px 22px rgba(11,37,69,.07);
+    padding:10px 24px 16px;
     z-index:60;
   }
   details.mobile-nav .panel a{
     display:block;
-    padding:11px 0;
+    padding:13px 0;
     text-decoration:none;
     font-weight:600;
     font-size:15px;
@@ -176,7 +177,6 @@ h1{
 .cover{
   width:100%;
   display:block;
-  margin:0 0 42px;
 }
 
 .content{
@@ -250,7 +250,22 @@ h1{
 }
 
 .source-link{
-  margin:0 0 30px;
+  margin:0 0 40px;
+}
+
+.cover-wrap{
+  margin:0 0 42px;
+}
+
+.cover{
+  margin:0;
+}
+
+.caption{
+  margin:10px 2px 0;
+  font-size:13px;
+  color:var(--muted);
+  font-style:italic;
 }
 
 .source-link a{
@@ -284,10 +299,17 @@ footer{
 @media(max-width:700px){
   .article{
     padding-top:36px;
+    padding-left:26px;
+    padding-right:26px;
   }
 
   .content{
     font-size:17px;
+    line-height:1.85;
+  }
+
+  .content p{
+    margin:0 0 27px;
   }
 }
 </style>
@@ -380,7 +402,13 @@ footer{
       }
 
       if(article.image){
-        html += '<img class="cover" src="' + article.image + '" alt="">';
+        var caption = article.imageCaption || article.caption || '';
+        html += '<figure class="cover-wrap">';
+        html += '<img class="cover" src="' + article.image + '" alt="' + (caption ? caption.replace(/"/g,'&quot;') : '') + '">';
+        if(caption){
+          html += '<figcaption class="caption">' + caption + '</figcaption>';
+        }
+        html += '</figure>';
       }
 
       html += '<div class="content">';
