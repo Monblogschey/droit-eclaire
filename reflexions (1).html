@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F1EA">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dika Liba">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Réflexions — Godefroid Dika Liba</title>
+<meta name="description" content="Des textes personnels sur la nationalité, la citoyenneté et les appartenances en Afrique, par Godefroid Dika Liba.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Godefroid Dika Liba">
+<meta property="og:title" content="Réflexions — Godefroid Dika Liba">
+<meta property="og:description" content="Des textes personnels sur la nationalité, la citoyenneté et les appartenances en Afrique.">
+<meta property="og:url" content="https://godefroiddikaliba.fr/reflexions.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230B2545'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%23FFFFFF' font-family='Georgia,serif' font-weight='700'%3EGD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B2545; --ink-2:#13315C; --accent:#8E2A3B; --accent-soft:#F4E8EA;
+  --paper:#FFFFFF; --bg:#F5F1EA; --text:#17202B; --muted:#5A6472;
+  --line:#E4E0D8; --hair:#E7E0D7;
+  --serif:'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --sans:'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --sat:env(safe-area-inset-top, 0px); --sab:env(safe-area-inset-bottom, 0px);
+  color-scheme: light;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+[hidden]{display:none !important;}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%; scroll-padding-top:24px;}
+body{
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility;
+  margin:0; background:var(--paper); color:var(--text); font-family:var(--sans);
+  font-size:17px; line-height:1.65; overflow-x:hidden;
+}
+a{color:inherit;}
+a:focus-visible, button:focus-visible{outline:3px solid var(--accent); outline-offset:3px; border-radius:4px;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none !important; animation:none !important;} }
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+.read{max-width:660px;}
+.eyebrow{font-family:var(--sans); font-weight:700; font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;}
+
+/* ---------- En-tête (même structure que l'accueil mobile) ---------- */
+.app-bar{position:relative; padding-top:var(--sat); border-bottom:1px solid var(--line); background:var(--paper);}
+.masthead{display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:72px;}
+.brand{display:inline-flex; flex-direction:column; gap:6px; text-decoration:none; color:var(--ink);}
+.brand-name{font-family:var(--serif); font-weight:600; font-size:18px; letter-spacing:-0.01em; line-height:1.1;}
+.brand-mark{display:none;}
+nav.main{display:flex; align-items:center; gap:26px;}
+nav.main a{text-decoration:none; font-weight:600; font-size:14.5px; color:var(--ink); padding:4px 0; border-bottom:1px solid transparent; white-space:nowrap;}
+nav.main a:hover{border-color:var(--accent); color:var(--accent);}
+nav.main a[aria-current="page"]{border-color:var(--accent); color:var(--accent);}
+.menu-btn{display:none;}
+
+/* ---------- Hero de page ---------- */
+.page-hero{padding:96px 0 60px;}
+.page-hero h1{font-family:var(--serif); font-weight:600; font-size:clamp(34px, 4.4vw, 52px); line-height:1.12; letter-spacing:-0.015em; color:var(--ink); margin:0 0 20px;}
+.page-hero .sub{font-size:20px; line-height:1.6; color:var(--text); max-width:56ch; margin:0 0 28px;}
+.page-hero .intro{font-size:16.5px; line-height:1.6; color:var(--muted); max-width:60ch; margin:0;}
+.h-short{display:none;}
+
+/* ---------- Filtres ---------- */
+.filters{border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:22px 0;}
+.filters-row{display:flex; flex-wrap:wrap; gap:8px 26px;}
+.filter-btn{font-family:var(--sans); font-weight:700; font-size:13.5px; letter-spacing:0.04em; text-transform:uppercase; color:var(--muted); background:none; border:0; border-bottom:2px solid transparent; padding:4px 0; cursor:pointer;}
+.filter-btn:hover{color:var(--ink);}
+.filter-btn[aria-pressed="true"]{color:var(--ink); border-color:var(--accent);}
+
+/* ---------- Table des matières ---------- */
+.toc{padding:0;}
+.toc-item{position:relative; display:grid; grid-template-columns:56px 1fr; gap:22px; padding:44px 0; border-bottom:1px solid var(--line);}
+.toc-item[hidden]{display:none;}
+.toc-item:first-child{padding-top:40px;}
+.toc-num{font-family:var(--serif); font-size:16px; color:var(--muted); padding-top:4px;}
+.toc-meta{display:flex; flex-wrap:wrap; gap:0 8px; align-items:baseline; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; margin:0 0 14px;}
+.toc-meta .cat{font-weight:700; color:var(--accent);}
+.toc-meta .sep{color:var(--line);}
+.toc-meta .type{font-weight:600; color:var(--muted);}
+.toc-meta .date{font-weight:600; color:var(--muted); margin-left:auto; text-transform:none; letter-spacing:0;}
+.toc-item h2{font-family:var(--serif); font-weight:600; font-size:clamp(22px, 2.4vw, 27px); line-height:1.3; color:var(--ink); margin:0 0 12px;}
+.toc-item h2 a{text-decoration:none; color:inherit;}
+.toc-item:hover h2{color:var(--accent);}
+.toc-item p.chapo{font-size:16.5px; line-height:1.6; color:var(--text); margin:0 0 16px; max-width:64ch;}
+.toc-item .go{font-weight:700; font-size:14.5px; color:var(--ink); text-decoration:none; border-bottom:1px solid transparent;}
+.toc-item:hover .go{color:var(--accent);}
+.toc-item .links{margin:0;}
+.links .go + .go{margin-left:20px;}
+.toc-empty{padding:56px 0; color:var(--muted); font-family:var(--serif); font-size:18px;}
+@media (min-width:900px){ .toc-meta .rt{display:none;} }
+
+/* ---------- Pied de page ---------- */
+footer.site{border-top:1px solid var(--line); padding:44px 0 calc(44px + var(--sab)); margin-top:24px;}
+footer.site .wrap{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center; font-size:14px; color:var(--muted);}
+footer.site .fname{font-family:var(--serif); font-weight:600; font-size:16px; color:var(--ink);}
+footer.site a{color:var(--muted); text-decoration:none;}
+footer.site a:hover{color:var(--accent);}
+
+.tabbar, .sheet-layer{display:none;}
+
+/* =====================================================================
+   ORDINATEUR : identique à la page actuelle (≥ 1101 px)
+   ===================================================================== */
+@media (min-width:1101px){ .menu-btn{display:none;} }
+
+/* Grande tablette / petit ordinateur (900 – 1100 px) : menu en feuille */
+@media (max-width:1100px){
+  nav.main{display:none;}
+  .menu-btn{
+    display:grid; place-items:center; width:40px; height:40px; border-radius:50%;
+    border:1px solid var(--hair); background:#fff; color:var(--ink); cursor:pointer;
+    box-shadow:0 1px 2px rgba(11,37,69,.06);
+  }
+  .menu-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round;}
+  .sheet-layer{display:block;}
+}
+@media (max-width:1100px) and (min-width:900px){
+  .wrap{padding:0 40px;}
+  .page-hero{padding:72px 0 48px;}
+  .toc-item{grid-template-columns:44px 1fr; gap:26px;}
+}
+
+/* =====================================================================
+   MOBILE ET TABLETTE VERTICALE (≤ 899 px) : interface « application »
+   ===================================================================== */
+@media (max-width:899px){
+  html{scroll-padding-top:120px;}
+  body{
+    background:var(--bg);
+    font-size:16.5px; line-height:1.6;
+    padding-bottom:calc(56px + var(--sab) + 22px);
+  }
+  .wrap{padding:0 20px;}
+
+  /* barre supérieure translucide */
+  .app-bar{
+    position:sticky; top:0; z-index:100;
+    background:rgba(245,241,234,.82);
+    -webkit-backdrop-filter:saturate(1.7) blur(22px); backdrop-filter:saturate(1.7) blur(22px);
+    border-bottom:1px solid transparent; transition:border-color .2s ease;
+  }
+  .app-bar.scrolled{border-bottom-color:var(--line);}
+  .masthead{min-height:56px;}
+  .brand-name{font-size:19px; line-height:1; letter-spacing:-.02em;}
+  .brand-mark{display:block; width:24px; height:2px; border-radius:2px; background:var(--accent);}
+  .menu-btn:active{transform:scale(.92);}
+
+  /* en-tête de page */
+  .page-hero{padding:26px 0 18px;}
+  .page-hero .wrap{max-width:none;}
+  .page-hero .eyebrow{display:none;}
+  .h-long{display:none;}
+  .h-short{display:inline;}
+  .page-hero h1{font-weight:500; font-size:clamp(36px,10.5vw,46px); line-height:1.04; letter-spacing:-.034em; margin:0 0 14px;}
+  .page-hero .sub{font-family:var(--serif); font-size:18px; line-height:1.5; color:#434C58; margin:0 0 8px;}
+  .page-hero .intro{font-size:14.5px; line-height:1.5; color:var(--muted);}
+
+  /* filtres : onglets tactiles, collés sous la barre */
+  .filters{
+    position:sticky; top:calc(56px + var(--sat)); z-index:90;
+    border:0; padding:8px 0 10px;
+    background:rgba(245,241,234,.86);
+    -webkit-backdrop-filter:saturate(1.7) blur(18px); backdrop-filter:saturate(1.7) blur(18px);
+  }
+  .filters .filters-row{
+    flex-wrap:nowrap; overflow-x:auto; gap:8px; padding:2px 34px 12px 20px; margin-bottom:-6px;
+    scroll-snap-type:x proximity; scroll-padding-left:20px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 34px),transparent 100%);
+    mask-image:linear-gradient(to right,#000 calc(100% - 34px),transparent 100%);
+  }
+  .filters-row::-webkit-scrollbar{display:none;}
+  .filter-btn{
+    flex:0 0 auto; scroll-snap-align:start; white-space:nowrap;
+    min-height:40px; padding:0 17px; border-radius:999px;
+    background:#fff; border:1px solid var(--hair); color:var(--ink);
+    font-size:14px; font-weight:600; letter-spacing:0; text-transform:none;
+    transition:background .15s ease, color .15s ease, transform .12s ease, border-color .15s ease;
+  }
+  .filter-btn:active{transform:scale(.95);}
+  .filter-btn[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:#fff; box-shadow:0 4px 10px rgba(11,37,69,.18);}
+
+  /* cartes éditoriales */
+  .toc{padding-top:10px;}
+  #toc-list{display:grid; gap:14px;}
+  .toc-item,.toc-item:first-child{
+    display:block; padding:18px 18px 8px; border:1px solid rgba(11,37,69,.06); border-radius:22px;
+    background:#fff; box-shadow:0 1px 0 rgba(11,37,69,.03), 0 10px 26px rgba(11,37,69,.07);
+    transition:transform .15s ease;
+  }
+  .toc-item:active{transform:scale(.985);}
+  .toc-item:hover h2{color:var(--ink);}
+  .toc-num{display:none;}
+  .toc-meta{display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin:0 0 12px; letter-spacing:.09em;}
+  .toc-meta .cat{
+    order:1; padding:6px 11px; border-radius:999px; background:var(--accent-soft);
+    font-size:11px; font-weight:700; line-height:1;
+  }
+  .toc-meta .sep{display:none;}
+  .toc-meta .date{order:2; margin-left:0; font-size:12.5px; font-weight:600; letter-spacing:0; text-transform:none; color:var(--muted);}
+  .toc-meta .type{order:3; flex:0 0 100%; margin-top:2px; font-size:11.5px; letter-spacing:.08em; color:var(--muted);}
+  .toc-meta .type .dot{display:none;}
+  .toc-meta .type .src{display:block; margin-top:3px; font-family:var(--serif); font-style:italic; font-weight:500; letter-spacing:0; text-transform:none; font-size:14px; color:var(--muted);}
+  .toc-item[data-type="new"] .toc-meta .type{color:var(--ink);}
+  .toc-item h2{font-weight:500; font-size:23px; line-height:1.2; letter-spacing:-.018em; margin:0 0 10px; overflow-wrap:anywhere;}
+  .toc-item h2 a::after{content:""; position:absolute; inset:0; border-radius:22px;}
+  .toc-item p.chapo{
+    font-size:15.5px; line-height:1.55; color:#48515D; margin:0 0 6px;
+    display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .toc-item .links{display:flex; align-items:center; flex-wrap:wrap; gap:0 22px; margin:0 -4px;}
+  .toc-item .go{position:relative; z-index:2; display:inline-flex; align-items:center; min-height:44px; padding:0 4px; font-size:15px; color:var(--accent);}
+  .toc-item .go.ext{font-size:13.5px; font-weight:600; color:var(--muted);}
+  .links .go + .go{margin-left:0;}
+  .toc-item:hover .go{color:var(--accent);}
+  .toc-item:hover .go.ext{color:var(--muted);}
+  .toc-empty{padding:34px 8px; font-size:17px; text-align:center;}
+
+  /* pied de page */
+  footer.site{margin-top:34px; padding:26px 0 8px; font-size:13px;}
+  footer.site .wrap{display:block; line-height:1.75; font-size:13px;}
+  footer.site .fname{display:block; font-size:18px;}
+  footer.site .wrap > span{display:block;}
+
+  /* barre d'onglets façon iOS */
+  .tabbar{
+    position:fixed; left:0; right:0; bottom:0; z-index:120; display:flex; justify-content:space-around;
+    padding:7px 6px calc(7px + var(--sab));
+    background:rgba(250,247,242,.86);
+    -webkit-backdrop-filter:saturate(1.8) blur(24px); backdrop-filter:saturate(1.8) blur(24px);
+    border-top:1px solid rgba(11,37,69,.09);
+  }
+  .tab{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:4px 0 2px;
+    text-decoration:none; color:#8A919B; font:600 10.5px/1.1 var(--sans); letter-spacing:.01em;
+    transition:color .15s ease, transform .12s ease;
+  }
+  .tab:active{transform:scale(.92);}
+  .tab svg{width:25px; height:25px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
+  .tab.active{color:var(--accent);}
+  .tab.active svg{stroke-width:2;}
+}
+@media (max-width:899px) and (min-width:600px){
+  .wrap{padding:0 32px;}
+  .filters .filters-row{padding-left:32px; scroll-padding-left:32px;}
+  #toc-list{max-width:720px; margin:0 auto;}
+  .page-hero .wrap,.toc.wrap{max-width:760px;}
+}
+@media (max-width:359px){
+  .toc-item h2{font-size:21px;}
+  .filter-btn{padding:0 14px; font-size:13.5px;}
+}
+
+/* ---------- Feuille de menu (mobile, tablette) ---------- */
+.sheet-layer{position:fixed; inset:0; z-index:200; visibility:hidden; pointer-events:none; transition:visibility 0s linear .34s;}
+.sheet-layer.open{visibility:visible; pointer-events:auto; transition-delay:0s;}
+.sheet-backdrop{position:absolute; inset:0; background:rgba(11,37,69,.38); opacity:0; transition:opacity .3s ease;}
+.sheet-layer.open .sheet-backdrop{opacity:1;}
+.sheet{
+  position:absolute; left:0; right:0; bottom:0; max-height:88vh; overflow-y:auto; margin:0 auto; max-width:560px;
+  background:var(--bg); border-radius:26px 26px 0 0; padding:8px 16px calc(20px + var(--sab));
+  transform:translateY(100%); transition:transform .36s cubic-bezier(.2,.85,.25,1);
+  box-shadow:0 -12px 40px rgba(11,37,69,.18);
+}
+.sheet-layer.open .sheet{transform:none;}
+.grabber{width:38px; height:5px; border-radius:3px; background:#CFC8BE; margin:4px auto 10px;}
+.sheet-head{display:flex; align-items:center; justify-content:space-between; margin:2px 4px 14px;}
+.sheet-title{margin:0; font:500 24px/1.1 var(--serif); letter-spacing:-.02em; color:var(--ink);}
+.sheet-close{width:34px; height:34px; border-radius:50%; border:0; background:#E9E3DA; color:var(--ink); display:grid; place-items:center; cursor:pointer;}
+.sheet-close svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round;}
+.sheet-label{margin:16px 6px 8px; font:700 11.5px/1 var(--sans); letter-spacing:.13em; text-transform:uppercase; color:var(--muted);}
+.sheet-group{background:#fff; border-radius:16px; border:1px solid rgba(11,37,69,.06); overflow:hidden;}
+.sheet-group a{display:flex; align-items:center; justify-content:space-between; min-height:50px; padding:0 16px; text-decoration:none; color:var(--ink); font:600 16px/1 var(--sans);}
+.sheet-group a + a{border-top:1px solid var(--hair);}
+.sheet-group a::after{content:"›"; font:400 24px/1 var(--sans); color:#B9B1A6;}
+.sheet-group a[aria-current="page"]{color:var(--accent);}
+.sheet-group a:active{background:var(--accent-soft);}
+.sheet-foot{margin:18px 6px 0; font:600 11.5px/1.5 var(--sans); letter-spacing:.11em; text-transform:uppercase; color:var(--accent); text-align:center;}
+</style>
+</head>
+<body>
+
+<header class="app-bar" id="appBar">
+  <div class="wrap masthead">
+    <a class="brand" href="/" aria-label="Accueil — Godefroid Dika Liba">
+      <span class="brand-name">Godefroid Dika Liba</span>
+      <span class="brand-mark" aria-hidden="true"></span>
+    </a>
+
+    <nav class="main" aria-label="Navigation principale">
+      <a href="reflexions.html" aria-current="page">Réflexions</a>
+      <a href="reflexions.html?cat=nationalite">Nationalité</a>
+      <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+      <a href="reflexions.html?cat=diaspora">Diaspora</a>
+      <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
+      <a href="a-propos.html">À propos</a>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sheet">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14M5 15h14"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap read">
+      <p class="eyebrow">Réflexions</p>
+      <h1><span class="h-long">Articles, analyses et réflexions</span><span class="h-short">Réflexions</span></h1>
+      <p class="sub">Sur la nationalité, la citoyenneté et les appartenances en Afrique.</p>
+      <p class="intro">Publications antérieures et textes à venir, classés par thématique.</p>
+    </div>
+  </section>
+
+  <nav class="filters" aria-label="Filtrer les réflexions">
+    <div class="wrap filters-row" id="filters" role="group">
+      <button type="button" class="filter-btn" data-filter="toutes" aria-pressed="true">Toutes</button>
+      <button type="button" class="filter-btn" data-filter="nationalite" aria-pressed="false">Nationalité</button>
+      <button type="button" class="filter-btn" data-filter="citoyennete" aria-pressed="false">Citoyenneté</button>
+      <button type="button" class="filter-btn" data-filter="diaspora" aria-pressed="false">Diaspora</button>
+      <button type="button" class="filter-btn" data-filter="regards" aria-pressed="false">Regards d'Afrique</button>
+    </div>
+  </nav>
+
+  <section class="wrap toc" aria-live="polite">
+    <div id="toc-list"></div>
+    <p class="toc-empty" id="toc-empty" hidden>Aucune réflexion dans cette catégorie pour l'instant.</p>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span class="fname">Godefroid Dika Liba</span>
+    <span><a href="mailto:contactgodefroid@gmail.com">contactgodefroid@gmail.com</a></span>
+    <span>© 2026 · <a href="mentions-legales.html">Mentions légales</a></span>
+  </div>
+</footer>
+
+<nav class="tabbar" aria-label="Navigation mobile">
+  <a class="tab" href="/">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.8 12 4.2l8 6.6V19a1 1 0 0 1-1 1h-4.2v-5.6H9.2V20H5a1 1 0 0 1-1-1z"/></svg>
+    <span>Accueil</span>
+  </a>
+  <a class="tab active" href="reflexions.html" aria-current="page">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.2"/><path d="M8.6 8.2h6.8M8.6 12h6.8M8.6 15.8h4.2"/></svg>
+    <span>Lire</span>
+  </a>
+  <a class="tab" href="/#themes">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.4 8.6-2 4.8-4.8 2 2-4.8z"/></svg>
+    <span>Explorer</span>
+  </a>
+  <a class="tab" href="a-propos.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.2" r="3.4"/><path d="M5.2 20c.5-4 2.8-6 6.8-6s6.3 2 6.8 6"/></svg>
+    <span>À propos</span>
+  </a>
+</nav>
+
+<div class="sheet-layer" id="sheetLayer">
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="grabber" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <h2 class="sheet-title">Menu</h2>
+      <button class="sheet-close" id="sheetClose" type="button" aria-label="Fermer le menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-group">
+      <a href="reflexions.html" aria-current="page">Réflexions</a>
+      <a href="a-propos.html">À propos</a>
+    </div>
+    <p class="sheet-label">Thématiques</p>
+    <div class="sheet-group">
+      <a href="reflexions.html?cat=nationalite">Nationalité</a>
+      <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+      <a href="reflexions.html?cat=diaspora">Diaspora</a>
+      <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
+    </div>
+    <p class="sheet-foot">Nationalité · Citoyenneté · Afrique</p>
+  </div>
+</div>
+
+<script src="site.js"></script>
+<script>
+(function(){
+  var S = window.SITE, esc = S.esc;
+  S.protect();
+
+  /* Repli pour les deux publications d'origine : ils restent classés exactement comme avant. */
+  var META = {
+    'nationalite-congolaise-revenir-au-droit': { cat: 'nationalite', catLabel: 'Nationalité', type: 'Publication antérieure', source: 'Village de la Justice' },
+    'statut-juridique-diaspora-congolaise': { cat: 'diaspora', catLabel: 'Diaspora', type: 'Publication antérieure', source: 'Village de la Justice' }
+  };
+
+  /* ---------- outils : tri par date française, catégorie, temps de lecture ---------- */
+  var MOIS = ['janvier','fevrier','mars','avril','mai','juin','juillet','aout','septembre','octobre','novembre','decembre'];
+  function fold(s){ return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+  function frTime(s){
+    var m = fold(s).match(/(\d{1,2})\s+([a-z]{3,})\.?\s+(\d{4})/);
+    if(m){ for(var i = 0; i < MOIS.length; i++){ if(MOIS[i].indexOf(m[2]) === 0){ return new Date(+m[3], i, +m[1]).getTime(); } } }
+    var t = Date.parse(s); return isNaN(t) ? 0 : t;
+  }
+  function sortDesc(list){
+    return list.map(function(a, i){ return {a:a, i:i}; })
+      .sort(function(x, y){ var d = frTime(y.a.date) - frTime(x.a.date); return d !== 0 ? d : x.i - y.i; })
+      .map(function(o){ return o.a; });
+  }
+  function catId(label){
+    var n = fold(label);
+    if(n.indexOf('regard') > -1) return 'regards';
+    if(n.indexOf('citoyen') > -1) return 'citoyennete';
+    if(n.indexOf('diaspora') > -1) return 'diaspora';
+    return 'nationalite';
+  }
+  function readMin(a){
+    var t = String((a && a.body) || '');
+    var plain = !a || a.format === 'plain';
+    t = t.split(/\n\s*\n/).filter(function(p){
+      p = p.trim();
+      if(/^\\?\[\d+\\?\]\s/.test(p)){ return false; }
+      if(plain && /^\d+\.\s/.test(p)){ return false; }
+      return true;
+    }).join('\n\n');
+    if(!plain){ t = t.replace(/!\[[^\]]*\]\([^)]*\)/g, ' ').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*_`>#]+/g, ' '); }
+    t = t.replace(/https?:\/\/\S+/g, ' ');
+    var w = (t.match(/[\p{L}\p{N}][\p{L}\p{N}'’\-]*/gu) || []).length;
+    return w < 40 ? 0 : Math.max(1, Math.round(w / 220));
+  }
+  function chapo(text){
+    text = (text || '').trim();
+    var i = text.indexOf('. ');
+    return i > 20 ? text.slice(0, i + 1) : text;
+  }
+
+  /* ---------- filtre : ?cat= dans l'adresse, puis clic instantané ---------- */
+  var VALID = ['nationalite','citoyennete','diaspora','regards'];
+  var fromUrl = new URLSearchParams(location.search).get('cat');
+  var current = VALID.indexOf(fromUrl) > -1 ? fromUrl : 'toutes';
+  var row = document.getElementById('filters');
+  var btns = document.querySelectorAll('.filter-btn');
+  var ITEMS = [];
+
+  function markActive(){
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-filter') === current ? 'true' : 'false'); });
+  }
+  function centerActive(smooth){
+    var b = row.querySelector('.filter-btn[aria-pressed="true"]');
+    if(!b || row.scrollWidth <= row.clientWidth + 2){ return; }
+    var left = b.offsetLeft - (row.clientWidth - b.offsetWidth) / 2;
+    row.scrollTo({ left: Math.max(0, left), behavior: smooth ? 'smooth' : 'auto' });
+  }
+  function apply(){
+    var visible = 0;
+    ITEMS.forEach(function(it){
+      var show = current === 'toutes' || it.cat === current;
+      it.el.hidden = !show;
+      if(show) visible++;
+    });
+    document.getElementById('toc-empty').hidden = visible !== 0;
+  }
+  markActive();
+
+  function render(list){
+    var el = document.getElementById('toc-list');
+    if(!list.length){
+      document.getElementById('toc-empty').hidden = false;
+      document.getElementById('toc-empty').textContent = 'Les premières réflexions seront publiées prochainement.';
+      return;
+    }
+    list = sortDesc(list);
+    var html = '';
+    list.forEach(function(a, i){
+      var fb = META[a.slug] || {};
+      var m = {
+        cat: catId(a.category || fb.catLabel),
+        catLabel: a.category || fb.catLabel || '',
+        type: a.type || fb.type || 'Réflexion',
+        source: a.source || fb.source || ''
+      };
+      var prior = fold(m.type).indexOf('anterieure') > -1;
+      var mins = readMin(a);
+      var num = String(i + 1).padStart(2, '0');
+      var url = S.articleUrl(a);
+      html += '<article class="toc-item" data-cat="' + m.cat + '" data-type="' + (prior ? 'prior' : 'new') + '">';
+      html += '<span class="toc-num">' + num + '</span>';
+      html += '<div>';
+      html += '<p class="toc-meta">';
+      if(m.catLabel){ html += '<span class="cat">' + esc(m.catLabel) + '</span><span class="sep">·</span>'; }
+      html += '<span class="type">' + esc(m.type) + (m.source ? '<span class="dot"> · </span><span class="src">' + esc(m.source) + '</span>' : '') + '</span>';
+      html += '<span class="date">' + esc(S.frDate(a.date)) + (mins ? '<span class="rt"> · ' + mins + ' min</span>' : '') + '</span>';
+      html += '</p>';
+      html += '<h2><a href="' + url + '">' + esc(a.title) + '</a></h2>';
+      html += '<p class="chapo">' + esc(chapo(a.summary)) + '</p>';
+      html += '<p class="links"><a class="go" href="' + url + '">Lire →</a>';
+      if(a.sourceUrl){
+        html += ' <a class="go ext" href="' + esc(a.sourceUrl) + '" target="_blank" rel="noopener">Publication originale ↗</a>';
+      }
+      html += '</p>';
+      html += '</div></article>';
+    });
+    el.innerHTML = html;
+    ITEMS = Array.prototype.map.call(el.querySelectorAll('.toc-item'), function(node){
+      return { el: node, cat: node.getAttribute('data-cat') };
+    });
+    apply();
+  }
+
+  row.addEventListener('click', function(e){
+    var btn = e.target.closest('.filter-btn');
+    if(!btn) return;
+    current = btn.getAttribute('data-filter');
+    markActive();
+    apply();
+    centerActive(true);
+  });
+
+  S.loadArticles().then(render).catch(function(){ render([]); });
+  window.addEventListener('load', function(){ centerActive(false); });
+  centerActive(false);
+
+  /* ---------- barre supérieure : filet au défilement ---------- */
+  var bar = document.getElementById('appBar');
+  function onScroll(){ bar.classList.toggle('scrolled', (window.scrollY || 0) > 4); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* ---------- feuille de menu ---------- */
+  var layer = document.getElementById('sheetLayer'), btn = document.getElementById('menuBtn');
+  var closeBtn = document.getElementById('sheetClose');
+  function openSheet(){
+    layer.classList.add('open'); btn.setAttribute('aria-expanded', 'true');
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(function(){ closeBtn.focus(); }, 60);
+  }
+  function closeSheet(){
+    layer.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+    document.documentElement.style.overflow = '';
+    btn.focus();
+  }
+  btn.addEventListener('click', openSheet);
+  closeBtn.addEventListener('click', closeSheet);
+  document.getElementById('sheetBackdrop').addEventListener('click', closeSheet);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && layer.classList.contains('open')){ closeSheet(); } });
+  layer.addEventListener('click', function(e){ if(e.target.closest('.sheet-group a')){ document.documentElement.style.overflow = ''; } });
+})();
+</script>
+<script data-goatcounter="https://droit-eclaire.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

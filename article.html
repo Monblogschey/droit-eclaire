@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F1EA">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dika Liba">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230B2545'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%23FFFFFF' font-family='Georgia,serif' font-weight='700'%3EGD%3C/text%3E%3C/svg%3E">
 <title>Article — Godefroid Dika Liba</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,16 +21,24 @@
 <style>
 :root{
   --ink:#0B2545;
+  --ink-2:#13315C;
   --paper:#FFFFFF;
+  --bg:#F5F1EA;
   --accent:#8E2A3B;
+  --accent-soft:#F4E8EA;
   --text:#17202B;
   --muted:#5A6472;
   --line:#E4E0D8;
+  --hair:#E7E0D7;
   --serif:'Source Serif 4',Georgia,serif;
   --sans:'Public Sans',system-ui,sans-serif;
+  --sat:env(safe-area-inset-top,0px);
+  --sab:env(safe-area-inset-bottom,0px);
 }
 
-*{box-sizing:border-box}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
 
 body{
   margin:0;
@@ -40,7 +57,8 @@ a{color:inherit}
   padding:0 24px;
 }
 
-header.site{
+/* ---------- En-tête (même structure que l'accueil mobile) ---------- */
+.app-bar{
   border-bottom:1px solid var(--line);
   position:relative;
 }
@@ -61,6 +79,9 @@ header.site{
   color:var(--ink);
 }
 
+.brand-name{display:inline}
+.brand-mark{display:none}
+
 nav.main{
   display:flex;
   gap:26px;
@@ -80,63 +101,10 @@ nav.main a:hover{
   border-color:var(--accent);
 }
 
-details.mobile-nav{display:none;}
+.menu-btn,.read-progress{display:none}
+.tabbar,.sheet-layer{display:none}
 
-@media (max-width:1100px){
-  nav.main{display:none;}
-  details.mobile-nav{display:block;}
-  details.mobile-nav summary{
-    list-style:none;
-    cursor:pointer;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-family:var(--sans);
-    font-weight:700;
-    font-size:12.5px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--ink);
-    padding:6px 0;
-    border:0;
-    background:none;
-  }
-  details.mobile-nav summary::-webkit-details-marker{display:none;}
-  details.mobile-nav summary::after{
-    content:"";
-    width:6px;
-    height:6px;
-    border-right:1.5px solid var(--accent);
-    border-bottom:1.5px solid var(--accent);
-    transform:rotate(45deg);
-    position:relative;
-    top:-1px;
-    transition:transform .15s ease;
-  }
-  details.mobile-nav[open] summary::after{transform:rotate(-135deg); top:2px;}
-  details.mobile-nav .panel{
-    position:absolute;
-    left:0;
-    right:0;
-    top:100%;
-    background:#FFFFFF;
-    border-bottom:1px solid var(--line);
-    box-shadow:0 12px 22px rgba(11,37,69,.07);
-    padding:10px 24px 16px;
-    z-index:60;
-  }
-  details.mobile-nav .panel a{
-    display:block;
-    padding:13px 0;
-    text-decoration:none;
-    font-weight:600;
-    font-size:15px;
-    color:var(--ink);
-    border-bottom:1px solid var(--line);
-  }
-  details.mobile-nav .panel a:last-child{border-bottom:0;}
-}
-
+/* ---------- Article ---------- */
 .article{
   max-width:720px;
   margin:0 auto;
@@ -151,6 +119,8 @@ details.mobile-nav{display:none;}
   color:var(--accent);
   margin:0 0 14px;
 }
+
+.chapo,.prov,.e-cat{display:none}
 
 .date{
   font-size:14px;
@@ -361,44 +331,220 @@ footer{
   flex-wrap:wrap;
 }
 
-@media (max-width:1100px) and (min-width:768px){
+.fp{display:none}
+
+/* =====================================================================
+   ≤ 1100 px : le menu passe dans une feuille (comme l'accueil mobile)
+   ===================================================================== */
+@media (max-width:1100px){
+  nav.main{display:none}
+  .menu-btn{
+    display:grid; place-items:center; width:40px; height:40px; border-radius:50%;
+    border:1px solid var(--hair); background:#fff; color:var(--ink); cursor:pointer;
+    box-shadow:0 1px 2px rgba(11,37,69,.06);
+  }
+  .menu-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round}
+  .sheet-layer{display:block}
+}
+
+@media (max-width:1100px) and (min-width:900px){
   .wrap{padding:0 40px;}
   .article{max-width:680px; padding:64px 24px 72px;}
   h1{font-size:clamp(36px,5vw,44px);}
   .content h2{font-size:29px;}
 }
 
-@media(max-width:767px){
-  .wrap{padding:0 20px;}
+/* =====================================================================
+   ≤ 899 px : LECTURE « APPLICATION iPHONE »
+   ===================================================================== */
+@media (max-width:899px){
+  html{scroll-padding-top:76px}
+  body{
+    background:var(--bg);
+    font-size:16.5px;
+    line-height:1.6;
+    padding-bottom:calc(56px + var(--sab) + 26px);
+  }
+  .wrap{padding:0 20px}
 
-  .article{
-    padding-top:36px;
-    padding-left:26px;
-    padding-right:26px;
+  /* barre supérieure compacte et translucide */
+  .app-bar{
+    position:sticky; top:0; z-index:100;
+    padding-top:var(--sat);
+    background:rgba(245,241,234,.86);
+    -webkit-backdrop-filter:saturate(1.7) blur(22px); backdrop-filter:saturate(1.7) blur(22px);
+    border-bottom:1px solid transparent; transition:border-color .2s ease;
+  }
+  .app-bar.scrolled{border-bottom-color:var(--line)}
+  .masthead{min-height:56px}
+  .brand{display:inline-flex; flex-direction:column; gap:6px}
+  .brand-name{font-size:19px; line-height:1; letter-spacing:-.02em}
+  .brand-mark{display:block; width:24px; height:2px; border-radius:2px; background:var(--accent)}
+  .menu-btn:active{transform:scale(.92)}
+
+  /* fil de progression de lecture */
+  .read-progress{
+    display:block; position:absolute; left:0; bottom:-1px; width:100%; height:2px;
+    background:var(--accent); transform:scaleX(0); transform-origin:0 50%; pointer-events:none;
   }
 
-  h1{font-size:clamp(30px,8vw,36px);}
+  /* colonne de lecture */
+  main.article{max-width:none; margin:0; padding:4px 20px 30px}
+  .back{
+    display:inline-flex; align-items:center; min-height:44px; margin:0 0 6px -2px;
+    font:500 14px/1 var(--sans); color:var(--muted);
+  }
 
+  .a-head{display:flex; flex-direction:column}
+  .eyebrow{order:1; margin:6px 0 12px; font-size:11.5px; letter-spacing:.15em}
+  .eyebrow .e-full,.eyebrow.no-cat{display:none}
+  .eyebrow .e-cat{display:inline}
+  .a-head h1{
+    order:2; margin:0 0 18px; font-weight:500;
+    font-size:clamp(31px,8.8vw,38px); line-height:1.1; letter-spacing:-.03em;
+    text-wrap:balance; overflow-wrap:anywhere;
+  }
+  .chapo{
+    order:3; display:block; margin:0 0 22px; padding-left:14px; border-left:2px solid var(--hair);
+    font:400 17px/1.58 var(--serif); color:#4A5462; text-wrap:pretty;
+  }
+  .date{order:4; margin:0 0 2px; font:500 13px/1.5 var(--sans); color:var(--muted)}
+  .byline{order:5; margin:0 0 18px; font:400 13.5px/1.5 var(--sans); color:var(--muted)}
+
+  /* ligne de provenance : type, source, lien vers l'original */
+  .prov{
+    order:6; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+    gap:0 16px; margin:0 0 26px; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);
+  }
+  .prov-l{display:flex; flex-direction:column; gap:2px; padding:11px 0}
+  .prov-type{font:700 11px/1.3 var(--sans); letter-spacing:.13em; text-transform:uppercase; color:var(--ink)}
+  .prov-src{font:500 13.5px/1.3 var(--sans); color:var(--muted)}
+  .prov-link{
+    display:inline-flex; align-items:center; min-height:44px;
+    font:600 14px/1 var(--sans); color:var(--accent); text-decoration:underline;
+    text-decoration-thickness:1px; text-underline-offset:4px;
+  }
+  .source-link{display:none}
+
+  /* image de tête */
+  .cover-wrap{margin:0 0 30px}
+  .cover{aspect-ratio:4/3; height:auto; object-fit:cover; border-radius:16px}
+  .caption{margin:9px 2px 0; font:400 12.5px/1.45 var(--sans); font-style:normal; color:var(--muted)}
+
+  /* corps de lecture : Source Serif 4 */
   .content{
-    font-size:17px;
-    line-height:1.85;
+    font-family:var(--serif); font-size:17.5px; line-height:1.72; color:#1B2430;
+    text-align:left; hyphens:manual; -webkit-hyphens:manual;
   }
-
-  .content p{
-    margin:0 0 27px;
+  .content p{margin:0 0 1.2em; text-wrap:pretty}
+  .content h2{
+    font-size:27px; line-height:1.2; font-weight:600; letter-spacing:-.018em; margin:2.1em 0 .6em;
   }
+  .content h3{
+    font-size:21.5px; line-height:1.3; font-weight:600; margin:1.8em 0 .5em;
+  }
+  .content h2:first-child,.content h3:first-child{margin-top:0}
+  .content a{
+    color:var(--accent); text-decoration:underline; text-decoration-thickness:1px;
+    text-underline-offset:3px; text-decoration-color:rgba(142,42,59,.45);
+  }
+  .content blockquote{
+    margin:1.6em 0; padding:2px 0 2px 18px; border-left:2px solid var(--accent);
+    font-size:1.05em; line-height:1.6;
+  }
+  .content p.note{font-size:15px; line-height:1.55; color:#3D4756; margin-bottom:.8em}
+  .content blockquote p:last-child{margin-bottom:0}
+  .content ul,.content ol{margin:0 0 1.3em; padding-left:22px}
+  .content li{margin-bottom:.45em}
+  .content hr{border:0; border-top:1px solid var(--hair); margin:2em 0}
+  .content img{max-width:100%; height:auto; border-radius:12px}
+  .content table{display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; font:400 14.5px/1.5 var(--sans)}
+  .content th,.content td{padding:8px 10px; border:1px solid var(--hair); text-align:left}
+  .content pre{overflow-x:auto; font-size:14px}
 
-  .content h2{font-size:25px; margin-top:40px;}
-  .content h3{font-size:21px;}
+  /* mots-clés et lectures liées */
+  .keywords{margin-top:38px; padding-top:20px; border-top:1px solid var(--hair)}
+  .keywords p.label,.related p.label{font-size:11.5px; letter-spacing:.14em}
+  .keywords li{padding:6px 12px; font:500 13px/1.2 var(--sans); background:#fff; border-color:var(--hair)}
+  .related{margin-top:40px; padding-top:22px; border-top:1px solid var(--hair)}
+  .related a{padding:16px 0; font-size:19px; line-height:1.3; border-top:1px solid var(--hair)}
+
+  /* pied de page */
+  footer{margin-top:26px; padding:26px 0 8px; border-top:1px solid var(--hair); font-size:13px; line-height:1.75}
+  .footer-inner{display:block}
+  .footer-inner > *{display:block}
+  .footer-inner > span:first-child{font:600 18px/1.3 var(--serif); color:var(--ink)}
+  footer a{text-decoration:none}
+  .fp{display:inline}
+
+  /* barre d'onglets : discrète, se masque pendant la lecture */
+  .tabbar{
+    position:fixed; left:0; right:0; bottom:0; z-index:120; display:flex; justify-content:space-around;
+    padding:7px 6px calc(7px + var(--sab));
+    background:rgba(250,247,242,.88);
+    -webkit-backdrop-filter:saturate(1.8) blur(24px); backdrop-filter:saturate(1.8) blur(24px);
+    border-top:1px solid rgba(11,37,69,.09);
+    transition:transform .28s ease;
+  }
+  .tabbar.is-hidden{transform:translateY(105%)}
+  .tab{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; padding:4px 0 2px;
+    text-decoration:none; color:#8A919B; font:600 10.5px/1.1 var(--sans); letter-spacing:.01em;
+    transition:color .15s ease, transform .12s ease;
+  }
+  .tab:active{transform:scale(.92)}
+  .tab svg{width:25px; height:25px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+  .tab.active{color:var(--accent)}
+  .tab.active svg{stroke-width:2}
 }
+@media (max-width:899px) and (min-width:600px){
+  .wrap{padding:0 32px}
+  main.article{max-width:720px; margin:0 auto; padding:4px 32px 30px}
+  .content{font-size:18px}
+}
+@media (max-width:359px){
+  .a-head h1{font-size:29px}
+  .content{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important; animation:none !important}
+}
+
+/* ---------- Feuille de menu ---------- */
+.sheet-layer{position:fixed; inset:0; z-index:200; visibility:hidden; pointer-events:none; transition:visibility 0s linear .34s}
+.sheet-layer.open{visibility:visible; pointer-events:auto; transition-delay:0s}
+.sheet-backdrop{position:absolute; inset:0; background:rgba(11,37,69,.38); opacity:0; transition:opacity .3s ease}
+.sheet-layer.open .sheet-backdrop{opacity:1}
+.sheet{
+  position:absolute; left:0; right:0; bottom:0; max-height:88vh; overflow-y:auto; margin:0 auto; max-width:560px;
+  background:var(--bg); border-radius:26px 26px 0 0; padding:8px 16px calc(20px + var(--sab));
+  transform:translateY(100%); transition:transform .36s cubic-bezier(.2,.85,.25,1);
+  box-shadow:0 -12px 40px rgba(11,37,69,.18);
+}
+.sheet-layer.open .sheet{transform:none}
+.grabber{width:38px; height:5px; border-radius:3px; background:#CFC8BE; margin:4px auto 10px}
+.sheet-head{display:flex; align-items:center; justify-content:space-between; margin:2px 4px 14px}
+.sheet-title{margin:0; font:500 24px/1.1 var(--serif); letter-spacing:-.02em; color:var(--ink)}
+.sheet-close{width:34px; height:34px; border-radius:50%; border:0; background:#E9E3DA; color:var(--ink); display:grid; place-items:center; cursor:pointer}
+.sheet-close svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round}
+.sheet-label{margin:16px 6px 8px; font:700 11.5px/1 var(--sans); letter-spacing:.13em; text-transform:uppercase; color:var(--muted)}
+.sheet-group{background:#fff; border-radius:16px; border:1px solid rgba(11,37,69,.06); overflow:hidden}
+.sheet-group a{display:flex; align-items:center; justify-content:space-between; min-height:50px; padding:0 16px; text-decoration:none; color:var(--ink); font:600 16px/1 var(--sans)}
+.sheet-group a + a{border-top:1px solid var(--hair)}
+.sheet-group a::after{content:"›"; font:400 24px/1 var(--sans); color:#B9B1A6}
+.sheet-group a:active{background:var(--accent-soft)}
+.sheet-foot{margin:18px 6px 0; font:600 11.5px/1.5 var(--sans); letter-spacing:.11em; text-transform:uppercase; color:var(--accent); text-align:center}
 </style>
 </head>
 
 <body>
 
-<header class="site">
+<header class="app-bar" id="appBar">
   <div class="wrap masthead">
-    <a class="brand" href="/">Godefroid Dika Liba</a>
+    <a class="brand" href="/" aria-label="Accueil — Godefroid Dika Liba">
+      <span class="brand-name">Godefroid Dika Liba</span>
+      <span class="brand-mark" aria-hidden="true"></span>
+    </a>
 
     <nav class="main" aria-label="Navigation principale">
       <a href="reflexions.html">Réflexions</a>
@@ -409,18 +555,11 @@ footer{
       <a href="a-propos.html">À propos</a>
     </nav>
 
-    <details class="mobile-nav">
-      <summary>Menu</summary>
-      <div class="panel">
-        <a href="reflexions.html">Réflexions</a>
-        <a href="reflexions.html?cat=nationalite">Nationalité</a>
-        <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
-        <a href="reflexions.html?cat=diaspora">Diaspora</a>
-        <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
-        <a href="a-propos.html">À propos</a>
-      </div>
-    </details>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sheet">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14M5 15h14"/></svg>
+    </button>
   </div>
+  <div class="read-progress" id="readProgress" aria-hidden="true"></div>
 </header>
 
 <main class="article">
@@ -435,9 +574,53 @@ footer{
   <div class="wrap footer-inner">
     <span>Godefroid Dika Liba</span>
     <a href="mailto:contactgodefroid@gmail.com">contactgodefroid@gmail.com</a>
-    <span>© 2026 · <a href="mentions-legales.html">Mentions légales</a></span>
+    <span>© 2026 · <a href="mentions-legales.html">Mentions légales</a><span class="fp"> · <a href="confidentialite.html">Politique de confidentialité</a></span></span>
   </div>
 </footer>
+
+<nav class="tabbar" id="tabbar" aria-label="Navigation mobile">
+  <a class="tab" href="/">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.8 12 4.2l8 6.6V19a1 1 0 0 1-1 1h-4.2v-5.6H9.2V20H5a1 1 0 0 1-1-1z"/></svg>
+    <span>Accueil</span>
+  </a>
+  <a class="tab active" href="reflexions.html" aria-current="page">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.2"/><path d="M8.6 8.2h6.8M8.6 12h6.8M8.6 15.8h4.2"/></svg>
+    <span>Lire</span>
+  </a>
+  <a class="tab" href="/#themes">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.4 8.6-2 4.8-4.8 2 2-4.8z"/></svg>
+    <span>Explorer</span>
+  </a>
+  <a class="tab" href="a-propos.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.2" r="3.4"/><path d="M5.2 20c.5-4 2.8-6 6.8-6s6.3 2 6.8 6"/></svg>
+    <span>À propos</span>
+  </a>
+</nav>
+
+<div class="sheet-layer" id="sheetLayer">
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="grabber" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <h2 class="sheet-title">Menu</h2>
+      <button class="sheet-close" id="sheetClose" type="button" aria-label="Fermer le menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-group">
+      <a href="reflexions.html">Réflexions</a>
+      <a href="a-propos.html">À propos</a>
+    </div>
+    <p class="sheet-label">Thématiques</p>
+    <div class="sheet-group">
+      <a href="reflexions.html?cat=nationalite">Nationalité</a>
+      <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+      <a href="reflexions.html?cat=diaspora">Diaspora</a>
+      <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
+    </div>
+    <p class="sheet-foot">Nationalité · Citoyenneté · Afrique</p>
+  </div>
+</div>
 
 <script src="marked.min.js"></script>
 <script>
@@ -446,6 +629,11 @@ footer{
   var slug = new URLSearchParams(location.search).get('slug');
   var root = document.getElementById('article');
 
+  function esc(v){
+    return String(v == null ? '' : v)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+  }
 
   /* Temps de lecture estimé : ~220 mots par minute, hors notes et références */
   function readMin(a){
@@ -465,6 +653,23 @@ footer{
   }
   function readLabel(a){ var m = readMin(a); return m ? m + ' min de lecture' : ''; }
 
+  /* Typographie française : l'espace avant « : ; ! ? » et après « ne se coupe jamais en fin de ligne */
+  function frenchSpaces(nodes){
+    Array.prototype.forEach.call(nodes, function(el){
+      var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var n, list = [];
+      while((n = w.nextNode())){
+        var tag = n.parentNode && n.parentNode.nodeName;
+        if(tag === 'PRE' || tag === 'CODE' || tag === 'SCRIPT' || tag === 'STYLE'){ continue; }
+        list.push(n);
+      }
+      list.forEach(function(t){
+        var v = t.nodeValue.replace(/ ([:;!?»])/g, '\u00A0$1').replace(/« /g, '«\u00A0');
+        if(v !== t.nodeValue){ t.nodeValue = v; }
+      });
+    });
+  }
+
   fetch('data/articles.json')
     .then(function(r){ return r.json(); })
     .then(function(data){
@@ -482,16 +687,23 @@ footer{
 
       var html = '';
 
+      /* catégorie · type · source (même texte qu'avant ; chaque élément est repérable pour le mobile) */
       var parts = [];
       if(article.category){ parts.push(article.category); }
       if(article.type){ parts.push(article.type); }
       if(article.source){ parts.push(article.source); }
       var eyebrowText = parts.length ? parts.join(' · ') : 'Réflexion';
+      var eyebrowHtml = '<span class="e-full">' + esc(eyebrowText) + '</span><span class="e-cat">' + esc(article.category || '') + '</span>';
 
-      html += '<div class="eyebrow">' + eyebrowText + '</div>';
+      html += '<div class="a-head">';
+      html += '<div class="eyebrow' + (article.category ? '' : ' no-cat') + '">' + eyebrowHtml + '</div>';
       var rl = readLabel(article);
       html += '<div class="date">' + (article.date || '') + (rl ? ' · ' + rl : '') + '</div>';
       html += '<h1>' + article.title + '</h1>';
+
+      if(article.summary){
+        html += '<p class="chapo">' + esc(article.summary) + '</p>';
+      }
 
       if(article.author){
         html += '<div class="byline">Par ' + article.author + '</div>';
@@ -501,10 +713,20 @@ footer{
         html += '<p class="source-link"><a href="' + article.sourceUrl + '" target="_blank" rel="noopener">Publication originale ↗</a></p>';
       }
 
+      /* ligne de provenance (mobile) : type, source, lien vers l'original */
+      html += '<div class="prov"><div class="prov-l"><span class="prov-type">' + esc(article.type || 'Réflexion') + '</span>';
+      if(article.source){ html += '<span class="prov-src">' + esc(article.source) + '</span>'; }
+      html += '</div>';
+      if(article.sourceUrl){
+        html += '<a class="prov-link" href="' + esc(article.sourceUrl) + '" target="_blank" rel="noopener">Publication originale ↗</a>';
+      }
+      html += '</div>';
+      html += '</div>';
+
       if(article.image){
         var caption = article.imageCaption || article.caption || '';
         html += '<figure class="cover-wrap">';
-        html += '<img class="cover" src="' + article.image + '" alt="' + (caption ? caption.replace(/"/g,'&quot;') : '') + '">';
+        html += '<img class="cover" src="' + article.image + '" alt="' + (caption ? caption.replace(/"/g,'&quot;') : '') + '" decoding="async">';
         if(caption){
           html += '<figcaption class="caption">' + caption + '</figcaption>';
         }
@@ -525,7 +747,8 @@ footer{
             var tag = h[1].length >= 3 ? 'h3' : 'h2';
             html += '<' + tag + '>' + h[2] + '</' + tag + '>';
           } else {
-            html += '<p>' + p.replace(/\n/g,'<br>') + '</p>';
+            var isNote = /^(\d+\.|\[\d+\])\s/.test(p);
+            html += '<p' + (isNote ? ' class="note"' : '') + '>' + p.replace(/\n/g,'<br>') + '</p>';
           }
         });
       }
@@ -558,10 +781,64 @@ footer{
       html += '<a class="back" style="margin-top:36px;" href="reflexions.html">← Toutes les réflexions</a>';
 
       root.innerHTML = html;
+      if(window.matchMedia && window.matchMedia('(max-width:899px)').matches){
+        frenchSpaces(root.querySelectorAll('h1, .chapo, .content'));
+      }
+      updateProgress();
     })
     .catch(function(){
       root.innerHTML = '<p>Impossible de charger l’article.</p>';
     });
+
+  /* ---------- barre supérieure, progression de lecture, barre d'onglets ---------- */
+  var bar = document.getElementById('appBar');
+  var progress = document.getElementById('readProgress');
+  var tab = document.getElementById('tabbar');
+  var lastY = window.scrollY || 0, acc = 0, ticking = false;
+
+  function updateProgress(){
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, (window.scrollY || 0) / max)) : 0;
+    progress.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+  }
+  function onScroll(){
+    var y = window.scrollY || 0;
+    bar.classList.toggle('scrolled', y > 4);
+    updateProgress();
+    var d = y - lastY; lastY = y;
+    if(Math.abs(d) < 2){ return; }
+    acc = ((d > 0) === (acc > 0)) ? acc + d : d;
+    var nearBottom = (window.innerHeight + y) >= (document.documentElement.scrollHeight - 160);
+    if(y < 160 || nearBottom || acc < -10){ tab.classList.remove('is-hidden'); }
+    else if(acc > 16){ tab.classList.add('is-hidden'); }
+  }
+  window.addEventListener('scroll', function(){
+    if(ticking){ return; }
+    ticking = true;
+    window.requestAnimationFrame(function(){ onScroll(); ticking = false; });
+  }, {passive:true});
+  window.addEventListener('resize', updateProgress);
+  tab.addEventListener('focusin', function(){ tab.classList.remove('is-hidden'); });
+  onScroll();
+
+  /* ---------- feuille de menu ---------- */
+  var layer = document.getElementById('sheetLayer'), btn = document.getElementById('menuBtn');
+  var closeBtn = document.getElementById('sheetClose');
+  function openSheet(){
+    layer.classList.add('open'); btn.setAttribute('aria-expanded','true');
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(function(){ closeBtn.focus(); }, 60);
+  }
+  function closeSheet(){
+    layer.classList.remove('open'); btn.setAttribute('aria-expanded','false');
+    document.documentElement.style.overflow = '';
+    btn.focus();
+  }
+  btn.addEventListener('click', openSheet);
+  closeBtn.addEventListener('click', closeSheet);
+  document.getElementById('sheetBackdrop').addEventListener('click', closeSheet);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && layer.classList.contains('open')){ closeSheet(); } });
+  layer.addEventListener('click', function(e){ if(e.target.closest('.sheet-group a')){ document.documentElement.style.overflow = ''; } });
 
 })();
 </script>
