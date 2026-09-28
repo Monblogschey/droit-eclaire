@@ -1,13 +1,348 @@
 <!doctype html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administration — Godefroid Dika Liba</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Source+Serif+4:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+  /* ---------- Éditeur de texte : titres bien distincts du texte courant ---------- */
+  [data-slate-editor="true"]{
+    font-family:'Public Sans',system-ui,sans-serif !important;
+    font-size:16px;
+    line-height:1.7;
+    color:#17202B;
+  }
+  [data-slate-editor="true"] p{
+    font-family:'Public Sans',system-ui,sans-serif !important;
+    font-weight:400 !important;
+    font-size:16px !important;
+    color:#17202B !important;
+  }
+  [data-slate-editor="true"] h1,
+  [data-slate-editor="true"] h2,
+  [data-slate-editor="true"] h3{
+    font-family:'Source Serif 4',Georgia,'Times New Roman',serif !important;
+    font-weight:600 !important;
+    color:#0B2545 !important;
+    line-height:1.25 !important;
+    margin:1.3em 0 .5em !important;
+    padding-left:12px !important;
+    border-left:3px solid #8E2A3B !important;
+  }
+  [data-slate-editor="true"] h1,
+  [data-slate-editor="true"] h2{font-size:26px !important;}
+  [data-slate-editor="true"] h3{font-size:20px !important;}
+  [data-slate-editor="true"] blockquote{
+    font-family:'Source Serif 4',Georgia,serif !important;
+    font-style:italic;
+    border-left:3px solid #8E2A3B;
+    padding-left:14px;
+    margin-left:0;
+  }
+</style>
 </head>
 <body>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="/marked.min.js"></script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+/* Suggestion de mots-clés : analyse statistique du texte (fréquence des termes),
+   sans IA ni service externe. Les résultats sont des propositions à valider. */
+(function(root){
+  var STOP = ('a à ai aie aient aies ait alors après as assez au aucun aucune auparavant aura aurait aussi autre autres aux avant avec avoir avons ayant ' +
+    'bien car ce ceci cela celle celles celui ces cet cette ceux chaque chez ci comme comment concernant contre dans de des donc dont du dès elle elles en encore entre envers es est et étaient était étant été étions être eu eux ' +
+    'fait faits faire fois font furent futur il ils je jusqu jusque la là le les leur leurs lors lorsque lui ' +
+    'ma mais me même mes moi moins mon ne ni non nos notamment notre nous ou où par parce pas peu peut peuvent peux plus plusieurs pour pourquoi pourtant puis puisque ' +
+    'qu quand que quel quelle quelles quels qui quoi sa sans se selon ses si sien soi soit sommes son sont sous soit sur ta tandis te tel telle telles tels tes toi ton toujours tous tout toute toutes très tu un une unes uns vers via voici voilà vos votre vous y ' +
+    'ainsi cependant toutefois également ensuite enfin néanmoins désormais ici là-bas dès depuis pendant durant afin ainsi aussi ' +
+    'article articles alinéa paragraphe cadre égard ceux-ci celles-ci pouvoir doit doivent devrait devoir pourrait peut-être ' +
+    'face revenir permet permettent permettre ledit dudit aucune certains certaines quelques quelque tel dite dit ' +
+    'être sera seront serait seraient soient sois fut sont ont avait avaient aura auront ayant eue eues eus').split(/\s+/);
+  var GENERIC = { droit:1, loi:1, cas:1, texte:1, question:1, exemple:1, partie:1, sens:1, base:1, point:1, effet:1, notion:1, situation:1, fait:1, faits:1 };
+  var STOPSET = {};
+  STOP.forEach(function(w){ STOPSET[w] = true; });
+
+  function fold(s){ return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+  function stem(w){ // regroupe singulier/pluriel simples
+    var f = fold(w);
+    if(f.length > 4 && /[sx]$/.test(f)){ f = f.slice(0, -1); }
+    return f;
+  }
+  function stripMarkdown(t){
+    return String(t || '')
+      .replace(/\\([\[\]()*_#>!.\-])/g, '$1')
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      .replace(/[*_`>#]+/g, ' ')
+      .replace(/https?:\/\/\S+/g, ' ');
+  }
+
+  // Transforme un texte en "segments" : suites de mots pleins séparées par ponctuation ou mots-outils
+  function segments(text){
+    var out = [], run = [], sentenceStart = true;
+    var re = /([\p{L}][\p{L}\-]*(?:['’][\p{L}][\p{L}\-]*)*)|(\d[\p{N}\/.,]*)|([.!?…]+)|([,;:()«»"“”\[\]\/–—]+)/gu;
+    var m;
+    function flush(){ if(run.length){ out.push(run); run = []; } }
+    while((m = re.exec(text)) !== null){
+      if(m[1]){
+        var word = m[1];
+        var parts = word.split(/['’]/);
+        if(parts.length > 1){ flush(); }   // élision (d', l', qu'…) : coupe l'expression
+        word = parts[parts.length - 1];
+        var low = fold(word);
+        var isStop = STOPSET[word.toLowerCase()] || STOPSET[low] || word.length < 3;
+        if(isStop){ flush(); }
+        else {
+          var cap = /^\p{Lu}/u.test(word);
+          var acronym = word.length <= 6 && word === word.toUpperCase();
+          run.push({ w: word, key: stem(word), mid: cap && !sentenceStart && !acronym, acr: acronym });
+        }
+        sentenceStart = false;
+      } else if(m[3]){ flush(); sentenceStart = true; }
+      else { flush(); }
+    }
+    flush();
+    return out;
+  }
+
+  function suggest(fields, max){
+    max = max || 12;
+    var weighted = [
+      { text: stripMarkdown(fields.title), weight: 3 },
+      { text: stripMarkdown(fields.summary), weight: 2 },
+      { text: stripMarkdown(fields.body), weight: 1 }
+    ];
+    var stats = {};
+    weighted.forEach(function(part){
+      segments(part.text).forEach(function(run){
+        for(var i = 0; i < run.length; i++){
+          for(var n = 1; n <= 3 && i + n <= run.length; n++){
+            var slice = run.slice(i, i + n);
+            var key = slice.map(function(t){ return t.key; }).join(' ');
+            var st = stats[key] || (stats[key] = { n: n, count: 0, weighted: 0, forms: {}, proper: 0, acr: 0 });
+            var surface = slice.map(function(t){ return t.w; }).join(' ');
+            st.count += 1;
+            st.weighted += part.weight;
+            st.forms[surface] = (st.forms[surface] || 0) + 1;
+            if(slice[0].mid){ st.proper += 1; }
+            if(slice.length === 1 && slice[0].acr){ st.acr += 1; }
+          }
+        }
+      });
+    });
+
+    var list = Object.keys(stats).map(function(k){
+      var st = stats[k];
+      var best = Object.keys(st.forms).sort(function(a, b){ return st.forms[b] - st.forms[a]; })[0];
+      var label = best;
+      if(st.acr > 0){ label = best.toUpperCase(); }
+      else if(st.proper > 0){ label = best; }
+      else { label = best.charAt(0).toLowerCase() + best.slice(1); }
+      var factor = st.n === 1 ? 1 : (st.n === 2 ? 2.4 : 3.2);
+      var enough = st.count >= 2 || st.weighted >= 3;
+      return { key: k, n: st.n, count: st.count, label: label, score: st.weighted * factor, ok: enough };
+    }).filter(function(c){ return c.ok && c.label.length >= 3 && !(c.n === 1 && GENERIC[c.key]); })
+      .sort(function(a, b){ return b.score - a.score; });
+
+    var hasRdc = list.some(function(c){ return c.key === 'rdc'; });
+    var chosen = [];
+    list.forEach(function(c){
+      if(chosen.length >= max){ return; }
+      if(hasRdc && (c.key === 'republique democratique' || c.key === 'republique')){ return; }
+      var redundant = chosen.some(function(x){
+        var xk = ' ' + x.key + ' ', ck = ' ' + c.key + ' ';
+        if(xk.indexOf(ck) > -1){ return c.count <= x.count * 1.7; }   // contenu dans une expression déjà retenue
+        if(ck.indexOf(xk) > -1){ return true; }
+        return false;
+      });
+      if(!redundant){ chosen.push(c); }
+    });
+    return chosen.map(function(c){ return c.label; });
+  }
+
+  root.suggestKeywords = suggest;
+  if(typeof module !== 'undefined'){ module.exports = suggest; }
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  </script>
+  <script>
+
+(function(){
+  if(!window.CMS || typeof window.h !== 'function' || typeof window.createClass !== 'function'){ return; }
+  var h = window.h, createClass = window.createClass;
+
+  var st = {
+    wrap:  { fontFamily:"'Public Sans',system-ui,sans-serif" },
+    input: { width:'100%', boxSizing:'border-box', padding:'10px 12px', fontSize:'15px', border:'1px solid #dfdfe3', borderRadius:'4px' },
+    btn:   { margin:'10px 0 0', padding:'9px 14px', fontSize:'13.5px', fontWeight:'600', color:'#fff', background:'#0B2545', border:'0', borderRadius:'3px', cursor:'pointer' },
+    msg:   { margin:'10px 0 0', fontSize:'13px', color:'#5A6472' },
+    chips: { display:'flex', flexWrap:'wrap', gap:'8px', margin:'12px 0 0' },
+    chip:  function(on){ return { padding:'6px 12px', fontSize:'13.5px', cursor:'pointer', borderRadius:'999px',
+             border:'1px solid ' + (on ? '#8E2A3B' : '#c9ced6'), background: on ? '#8E2A3B' : '#fff', color: on ? '#fff' : '#17202B' }; }
+  };
+
+  function norm(s){ return String(s).trim().toLowerCase(); }
+
+  var Control = createClass({
+    getInitialState: function(){ return { sugg: [], msg: '' }; },
+    current: function(){
+      var v = this.props.value;
+      if(v && v.toJS){ v = v.toJS(); }
+      if(Array.isArray(v)){ v = v.join(', '); }
+      return v == null ? '' : String(v);
+    },
+    list: function(){ return this.current().split(',').map(function(s){ return s.trim(); }).filter(Boolean); },
+    /* lit la publication en cours d'édition : valeurs enregistrées + valeurs fraîches affichées dans l'éditeur */
+    item: function(){
+      var me = document.getElementById(this.props.forID);
+      var out = { title: '', summary: '', body: '' };
+      var inputs = document.querySelectorAll('input[id^="keywords-field-"]');
+      var idx = Array.prototype.indexOf.call(inputs, me);
+      var items = this.props.entry && this.props.entry.getIn(['data', 'articles']);
+      if(idx > -1 && items && items.get){
+        var it = items.get(idx);
+        if(it && it.toJS){ it = it.toJS(); out.title = it.title || ''; out.summary = it.summary || ''; out.body = it.body || ''; }
+      }
+      /* Decap ne rafraîchit pas toujours cette valeur pendant la frappe : on lit aussi l'éditeur à l'écran */
+      var box = null, node = me;
+      while(node && node !== document.body){
+        node = node.parentElement;
+        if(node && node.querySelector('input[id^="title-field-"]') && node.querySelector('[data-slate-editor="true"]')){ box = node; break; }
+      }
+      if(box){
+        var t = box.querySelector('input[id^="title-field-"]');
+        var s = box.querySelector('textarea[id^="summary-field-"]');
+        var ed = box.querySelector('[data-slate-editor="true"]');
+        if(t && t.value){ out.title = t.value; }
+        if(s && s.value){ out.summary = s.value; }
+        if(ed){
+          var blocks = ed.querySelectorAll('p, h1, h2, h3, li, blockquote');
+          var txt = blocks.length ? Array.prototype.map.call(blocks, function(b){ return b.textContent; }).join('\n') : ed.textContent;
+          if(txt && txt.trim()){ out.body = txt; }
+        }
+      }
+      return (out.title || out.summary || out.body) ? out : null;
+    },
+    itemOLD: function(){
+      var inputs = document.querySelectorAll('input[id^="keywords-field-"]');
+      var me = document.getElementById(this.props.forID);
+      var idx = Array.prototype.indexOf.call(inputs, me);
+      var items = this.props.entry && this.props.entry.getIn(['data', 'articles']);
+      if(idx < 0 || !items || !items.get){ return null; }
+      var it = items.get(idx);
+      return it && it.toJS ? it.toJS() : null;
+    },
+    propose: function(){
+      var it = this.item();
+      if(!it){ this.setState({ sugg: [], msg: "Publication introuvable : enregistrez d'abord le texte, puis réessayez." }); return; }
+      var body = String(it.body || '');
+      if(body.replace(/\s+/g, ' ').length < 150){
+        this.setState({ sugg: [], msg: "Rédigez d'abord le texte de la publication (au moins quelques paragraphes), puis cliquez à nouveau." });
+        return;
+      }
+      var s = window.suggestKeywords({ title: it.title, summary: it.summary, body: body }, 12);
+      this.setState({ sugg: s, msg: s.length ? s.length + " suggestions. Cliquez sur celles que vous souhaitez garder." : "Aucune suggestion pertinente : ajoutez vos mots-clés à la main." });
+    },
+    toggle: function(word){
+      var cur = this.list();
+      var i = cur.map(norm).indexOf(norm(word));
+      if(i > -1){ cur.splice(i, 1); } else { cur.push(word); }
+      this.props.onChange(cur.join(', '));
+    },
+    render: function(){
+      var self = this, chosen = this.list().map(norm);
+      var chips = this.state.sugg.map(function(w){
+        var on = chosen.indexOf(norm(w)) > -1;
+        return h('button', { type:'button', key:w, style: st.chip(on), onClick: function(){ self.toggle(w); } }, (on ? '✓ ' : '+ ') + w);
+      });
+      return h('div', { style: st.wrap },
+        h('input', { id: this.props.forID, type:'text', style: st.input, value: this.current(),
+                     placeholder: 'ex. nationalité, diaspora, RDC',
+                     onChange: function(e){ self.props.onChange(e.target.value); } }),
+        h('button', { type:'button', style: st.btn, onClick: this.propose }, 'Proposer des mots-clés à partir du texte'),
+        this.state.msg ? h('p', { style: st.msg }, this.state.msg) : null,
+        chips.length ? h('div', { style: st.chips }, chips) : null
+      );
+    }
+  });
+  var Preview = function(props){ return h('div', {}, String(props.value || '')); };
+  CMS.registerWidget('keywords', Control, Preview);
+})();
+
+  </script>
+
+  <script>
+var PREVIEW_CSS_TEXT = "\n@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,500;0,600;1,500&display=swap');\nbody{font-family:'Public Sans',system-ui,sans-serif;color:#17202B;background:#FFFFFF;margin:0;padding:22px;}\n.pv-hint{font-size:13px;color:#5A6472;margin:0 0 20px;line-height:1.5;}\n.pv{border:1px solid #E4E0D8;border-radius:3px;padding:22px 26px 26px;margin:0 0 30px;background:#fff;}\n.pv-num{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8E2A3B;margin:0 0 4px;}\n.pv-tag{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8A94A0;margin:22px 0 7px;}\n.pv-meta{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8E2A3B;margin:0 0 4px;}\n.pv-date{font-size:14px;color:#5A6472;margin:0 0 6px;}\n.pv-title{font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:32px;line-height:1.16;color:#0B2545;margin:0;letter-spacing:-.01em;}\n.pv-chapo{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:18px;line-height:1.55;color:#3B4756;margin:0;padding-left:14px;border-left:3px solid #E4E0D8;}\n.pv-body{font-size:16.5px;line-height:1.8;}\n.pv-body p{margin:0 0 20px;}\n.pv-body h2{font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:26px;line-height:1.25;color:#0B2545;margin:34px 0 14px;padding-left:12px;border-left:3px solid #8E2A3B;}\n.pv-body h3{font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:20px;line-height:1.3;color:#0B2545;margin:28px 0 12px;padding-left:12px;border-left:3px solid #8E2A3B;}\n.pv-body blockquote{font-family:'Source Serif 4',Georgia,serif;font-style:italic;margin:24px 0;padding:2px 0 2px 18px;border-left:3px solid #8E2A3B;color:#0B2545;}\n.pv-body ul,.pv-body ol{margin:0 0 20px;padding-left:24px;}\n.pv-empty{color:#8A94A0;font-style:italic;}\n";
+
+  (function(){
+    if(!window.CMS || !CMS.registerPreviewTemplate){ return; }
+    var h = window.h || CMS.h; var createClass = window.createClass || CMS.createClass;
+    if(typeof h !== 'function' || typeof createClass !== 'function'){ return; }
+    function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  /* Temps de lecture estimé : ~220 mots par minute, hors notes et références */
+  function readMin(a){
+    var t = String((a && a.body) || '');
+    var plain = !a || a.format === 'plain';
+    var paras = t.split(/\n\s*\n/).filter(function(p){
+      p = p.trim();
+      if(/^\\?\[\d+\\?\]\s/.test(p)){ return false; }          /* notes du type [1] … */
+      if(plain && /^\d+\.\s/.test(p)){ return false; }         /* références numérotées (anciens articles) */
+      return true;
+    });
+    t = paras.join('\n\n');
+    if(!plain){ t = t.replace(/!\[[^\]]*\]\([^)]*\)/g, ' ').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*_`>#]+/g, ' '); }
+    t = t.replace(/https?:\/\/\S+/g, ' ');
+    var words = (t.match(/[\p{L}\p{N}][\p{L}\p{N}'’\-]*/gu) || []).length;
+    return words < 40 ? 0 : Math.max(1, Math.round(words / 220));
+  }
+  function readLabel(a){ var m = readMin(a); return m ? m + ' min de lecture' : ''; }
+
+    function bodyHtml(a){
+      var body = a.body || '';
+      if(a.format !== 'plain' && window.marked){
+        return marked.parse(body, {breaks:true, gfm:true});
+      }
+      return body.split(/\n\s*\n/).map(function(p){
+        p = p.trim();
+        if(!p){ return ''; }
+        var m = p.match(/^(#{1,3})\s+([^\n]+)$/);
+        if(m){ var t = m[1].length >= 3 ? 'h3' : 'h2'; return '<' + t + '>' + esc(m[2]) + '</' + t + '>'; }
+        return '<p>' + esc(p).replace(/\n/g,'<br>') + '</p>';
+      }).join('');
+    }
+    var Preview = createClass({
+      render: function(){
+        var list = this.props.entry.getIn(['data','articles']);
+        var items = list && list.toJS ? list.toJS() : [];
+        var nodes = [h('p', {className:'pv-hint', key:'hint'}, "Aperçu de chaque publication, avec les polices du site. Les étiquettes grises (TITRE, CHAPEAU, TEXTE) indiquent le rôle de chaque bloc.")];
+        items.forEach(function(a, i){
+          var meta = [a.category, a.type, a.source].filter(Boolean).join(' · ');
+          nodes.push(h('article', {className:'pv', key:'a' + i}, [
+            h('p', {className:'pv-num', key:'n'}, 'Publication ' + (i + 1)),
+            h('p', {className:'pv-tag', key:'t1'}, 'Titre'),
+            h('p', {className:'pv-meta', key:'m'}, meta),
+            h('p', {className:'pv-date', key:'d'}, (a.date || '') + (readLabel(a) ? ' · ' + readLabel(a) + ' (estimé)' : '')),
+            h('h1', {className:'pv-title', key:'h'}, a.title || 'Sans titre'),
+            h('p', {className:'pv-tag', key:'t2'}, 'Chapeau (affiché dans les listes)'),
+            h('p', {className:'pv-chapo', key:'c'}, a.summary || ''),
+            h('p', {className:'pv-tag', key:'t3'}, 'Texte'),
+            h('div', {className:'pv-body', key:'b', dangerouslySetInnerHTML:{__html: bodyHtml(a)}}),
+            h('p', {className:'pv-tag', key:'t4'}, 'Mots-clés'),
+            h('p', {key:'k', style:{fontSize:'13.5px',color:'#5A6472',margin:0}}, a.keywords || '—')
+          ]));
+        });
+        return h('div', {}, nodes);
+      }
+    });
+    CMS.registerPreviewTemplate('articles', Preview);
+    CMS.registerPreviewStyle(PREVIEW_CSS_TEXT, {raw:true});
+  })();
+
+  </script>
   <script>
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", user => {
