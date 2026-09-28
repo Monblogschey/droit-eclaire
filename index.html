@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F1EA">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dika Liba">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 <title>Godefroid Dika Liba — Nationalité, citoyenneté, Afrique</title>
 <meta name="description" content="Revue juridique personnelle sur la nationalité, la citoyenneté, la diaspora et les appartenances en Afrique.">
@@ -12,653 +20,318 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+/* =====================================================================
+   V19 — ACCUEIL « APPLICATION iPHONE »
+   Principes : fond groupé, cartes arrondies, matériaux translucides,
+   zones tactiles ≥ 44 px, barre d'onglets, feuille de menu, marges sûres.
+   ===================================================================== */
 :root{
   --ink:#0B2545;
   --ink-2:#13315C;
-  --paper:#FFFFFF;
-  --paper2:#F7F6F3;
   --accent:#8E2A3B;
+  --accent-soft:#F4E8EA;
+  --bg:#F5F1EA;
+  --card:#FFFFFF;
   --text:#17202B;
-  --muted:#5A6472;
-  --line:#E4E0D8;
+  --muted:#66707D;
+  --hair:#E7E0D7;
+  --line:rgba(11,37,69,.09);
   --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
-  --sans:'Public Sans',system-ui,sans-serif;
+  --sans:'Public Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --sat:env(safe-area-inset-top,0px);
+  --sab:env(safe-area-inset-bottom,0px);
+  --shadow-soft:0 1px 0 rgba(11,37,69,.03),0 10px 26px rgba(11,37,69,.07);
+  --shadow-card:0 1px 0 rgba(11,37,69,.04),0 16px 38px rgba(11,37,69,.10);
+  --tab-h:56px;
 }
-
-*{box-sizing:border-box}
-
-html{scroll-behavior:smooth}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:74px}
 body{
-  margin:0;
-  background:var(--paper);
-  color:var(--text);
-  font-family:var(--sans);
-  font-size:17.5px;
-  line-height:1.7;
+  margin:0;background:var(--bg);color:var(--text);
+  font:400 16.5px/1.62 var(--sans);
   -webkit-font-smoothing:antialiased;
+  padding-bottom:calc(var(--tab-h) + var(--sab) + 18px);
 }
-
 a{color:inherit}
 img{max-width:100%;display:block}
+::selection{background:var(--ink);color:#fff}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 20px}
+main{overflow-x:hidden}
 
-.wrap{
-  max-width:1220px;
-  margin:0 auto;
-  padding:0 28px;
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.is-visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important}
+  .reveal{opacity:1;transform:none;transition:none}
 }
 
-.read{max-width:740px}
-
-::selection{background:var(--ink); color:#fff}
-
-/* ---------- reveal au scroll (discret) ---------- */
-.reveal{opacity:0; transform:translateY(14px); transition:opacity .7s ease, transform .7s ease;}
-.reveal.is-visible{opacity:1; transform:none;}
-@media (prefers-reduced-motion: reduce){
-  .reveal{opacity:1; transform:none; transition:none;}
+/* ---------- BARRE SUPÉRIEURE (matériau translucide) ---------- */
+.app-bar{
+  position:sticky;top:0;z-index:100;
+  padding-top:var(--sat);
+  background:rgba(245,241,234,.80);
+  -webkit-backdrop-filter:saturate(1.7) blur(22px);
+  backdrop-filter:saturate(1.7) blur(22px);
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease;
 }
-
-/* ---------- HEADER ---------- */
-
-header.site{
-  border-bottom:1px solid var(--line);
-  background:rgba(255,255,255,.97);
-  position:sticky;
-  top:0;
-  z-index:80;
+.app-bar.scrolled{border-bottom-color:var(--line)}
+.bar-inner{height:56px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:inline-flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
+.brand-name{font:600 19px/1 var(--serif);letter-spacing:-.02em}
+.brand-mark{display:block;width:24px;height:2px;border-radius:2px;background:var(--accent)}
+nav.main{display:none}
+.menu-btn{
+  width:40px;height:40px;border-radius:50%;border:1px solid var(--hair);background:#fff;
+  display:grid;place-items:center;color:var(--ink);cursor:pointer;
+  box-shadow:0 1px 2px rgba(11,37,69,.06);transition:transform .12s ease;
 }
-
-.masthead{
-  min-height:74px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
-}
-
-.brand{
-  font-family:var(--serif);
-  font-size:19px;
-  font-weight:600;
-  color:var(--ink);
-  text-decoration:none;
-  white-space:nowrap;
-}
-
-nav.main{
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:26px;
-  flex-wrap:wrap;
-}
-
-nav.main a{
-  position:relative;
-  text-decoration:none;
-  font-size:14.5px;
-  font-weight:600;
-  color:var(--ink);
-  padding:5px 0;
-}
-
-nav.main a::after{
-  content:"";
-  position:absolute;
-  left:0; right:100%;
-  bottom:0;
-  height:1px;
-  background:var(--accent);
-  transition:right .2s ease;
-}
-
-nav.main a:hover{color:var(--accent)}
-nav.main a:hover::after{right:0}
-
-details.mobile-nav{display:none;}
-
-@media (max-width:1100px){
-  nav.main{display:none;}
-  details.mobile-nav{display:block;}
-  details.mobile-nav summary{
-    list-style:none;
-    cursor:pointer;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-family:var(--sans);
-    font-weight:700;
-    font-size:12.5px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--ink);
-    padding:6px 0;
-    border:0;
-    background:none;
-  }
-  details.mobile-nav summary::-webkit-details-marker{display:none;}
-  details.mobile-nav summary::after{
-    content:"";
-    width:6px;
-    height:6px;
-    border-right:1.5px solid var(--accent);
-    border-bottom:1.5px solid var(--accent);
-    transform:rotate(45deg);
-    position:relative;
-    top:-1px;
-    transition:transform .15s ease;
-  }
-  details.mobile-nav[open] summary::after{transform:rotate(-135deg); top:2px;}
-  details.mobile-nav .panel{
-    position:absolute;
-    left:0;
-    right:0;
-    top:100%;
-    background:#FFFFFF;
-    border-bottom:1px solid var(--line);
-    box-shadow:0 12px 22px rgba(11,37,69,.07);
-    padding:10px 28px 16px;
-    z-index:60;
-  }
-  details.mobile-nav .panel a{
-    display:block;
-    padding:13px 0;
-    text-decoration:none;
-    font-weight:600;
-    font-size:15px;
-    color:var(--ink);
-    border-bottom:1px solid var(--line);
-  }
-  details.mobile-nav .panel a:last-child{border-bottom:0;}
-  header.site{position:sticky;}
-}
+.menu-btn:active{transform:scale(.92)}
+.menu-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
 
 /* ---------- HERO ---------- */
-
-.hero{
-  padding:112px 0 78px;
-  position:relative;
-  overflow:hidden;
-}
-
+.hero{position:relative;padding:26px 0 4px;overflow:hidden}
 .hero-map{
-  position:absolute;
-  right:-6%;
-  top:-10%;
-  width:640px;
-  height:640px;
-  opacity:.5;
-  pointer-events:none;
+  position:absolute;right:-150px;top:-40px;width:430px;height:350px;opacity:.42;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to left,#000 10%,transparent 62%);
+  mask-image:linear-gradient(to left,#000 10%,transparent 62%);
 }
-
-.hero-map path{
-  fill:none;
-  stroke:var(--accent);
-  stroke-width:1;
-  stroke-dasharray:6 7;
-  animation:hero-drift 60s linear infinite;
+.hero-map path{fill:none;stroke:var(--accent);stroke-width:1;stroke-dasharray:5 7;animation:drift 80s linear infinite}
+.hero-map path.alt{stroke:var(--ink);opacity:.45;animation-duration:100s;animation-direction:reverse}
+.hero-map circle{fill:var(--accent);opacity:.7}
+@keyframes drift{to{stroke-dashoffset:-900}}
+.hero .wrap{position:relative}
+.kicker,.sec-kicker{
+  margin:0 0 12px;color:var(--accent);
+  font:700 11.5px/1.3 var(--sans);letter-spacing:.15em;text-transform:uppercase;
 }
-
-.hero-map path.alt{stroke:var(--ink); opacity:.55; animation-duration:80s; animation-direction:reverse;}
-
-@keyframes hero-drift{
-  to{stroke-dashoffset:-1000;}
-}
-
-@media (prefers-reduced-motion: reduce){
-  .hero-map path{animation:none;}
-}
-
-.hero-inner{
-  max-width:800px;
-  position:relative;
-}
-
-.kicker{
-  margin:0 0 20px;
-  color:var(--accent);
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-}
-
 h1{
-  margin:0;
-  max-width:15ch;
-  font-family:var(--serif);
-  color:var(--ink);
-  font-size:clamp(40px,6vw,60px);
-  line-height:1.08;
-  font-weight:500;
-  letter-spacing:-.02em;
+  margin:0;font:500 clamp(34px,9.8vw,46px)/1.05 var(--serif);
+  letter-spacing:-.034em;color:var(--ink);text-wrap:balance;
 }
-
-.baseline{
-  max-width:56ch;
-  margin:28px 0 0;
-  font-family:var(--serif);
-  font-size:21px;
-  line-height:1.55;
-  color:var(--text);
-}
-
-.hero-actions{
-  margin-top:36px;
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
+.baseline{margin:18px 0 0;font:400 17.5px/1.55 var(--serif);color:#434C58}
+.cta{display:grid;gap:10px;margin-top:24px}
 .btn{
-  display:inline-flex;
-  align-items:center;
-  padding:12px 22px;
-  border-radius:2px;
-  text-decoration:none;
-  font-size:14px;
-  font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;
+  border-radius:15px;text-decoration:none;font:600 16px/1 var(--sans);
+  transition:transform .12s ease,opacity .12s ease;
 }
+.btn:active{transform:scale(.98);opacity:.92}
+.btn-primary{background:var(--ink);color:#fff;box-shadow:0 10px 22px rgba(11,37,69,.20)}
+.btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--hair)}
 
-.btn-primary{background:var(--ink); color:#fff;}
-.btn-primary:hover{background:var(--ink-2);}
-.btn-secondary{border:1px solid var(--line); color:var(--ink);}
-.btn-secondary:hover{border-color:var(--ink);}
-
-/* ---------- PHRASE PERSONNELLE ---------- */
-
-.origin-band{
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  padding:64px 0;
-  background:var(--paper2);
+/* ---------- PUCES THÉMATIQUES ---------- */
+.chips{
+  display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-left:20px;
+  margin:22px -20px 0;padding:2px 20px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
 }
-
-.origin-band blockquote{
-  margin:0 auto;
-  max-width:780px;
-  text-align:center;
-  font-family:var(--serif);
-  font-style:italic;
-  font-weight:500;
-  font-size:clamp(24px,3vw,32px);
-  line-height:1.5;
-  color:var(--ink);
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;scroll-snap-align:start;padding:10px 17px;border-radius:999px;
+  background:#fff;border:1px solid var(--hair);text-decoration:none;
+  font:600 14px/1 var(--sans);color:var(--ink);transition:transform .12s ease,background .12s ease;
 }
+.chip:active{transform:scale(.95);background:var(--accent-soft)}
 
-/* ---------- MANIFESTO ---------- */
+/* ---------- SECTIONS ---------- */
+.sec{padding:36px 0 2px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin:0 0 16px}
+.sec-title{margin:0;font:500 26px/1.15 var(--serif);letter-spacing:-.022em;color:var(--ink)}
+.see-all{flex:0 0 auto;font:600 14.5px/1 var(--sans);color:var(--accent);text-decoration:none;padding:6px 0}
 
-.manifesto{
-  background:var(--ink);
-  color:#fff;
-  padding:86px 0 90px;
+/* ---------- CARTE « À LA UNE » ---------- */
+.today{
+  display:block;background:var(--card);border-radius:24px;overflow:hidden;
+  border:1px solid rgba(11,37,69,.05);box-shadow:var(--shadow-card);
+  text-decoration:none;color:inherit;transition:transform .18s ease;
 }
-
-.manifesto .small{
-  color:#B9C6D8;
-  text-transform:uppercase;
-  letter-spacing:.16em;
-  font-size:12.5px;
-  font-weight:700;
-  margin:0 0 20px;
+.today:active{transform:scale(.985)}
+.today-media{position:relative;aspect-ratio:4/3;background:linear-gradient(140deg,var(--ink),var(--ink-2))}
+.today-media img{width:100%;height:100%;object-fit:cover}
+.today-media::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(to top,rgba(11,37,69,.5),transparent);pointer-events:none}
+.pill{
+  position:absolute;left:14px;top:14px;z-index:2;padding:7px 13px;border-radius:999px;
+  background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  font:700 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
 }
-
-.manifesto h2{
-  margin:0;
-  max-width:16ch;
-  font-family:var(--serif);
-  font-size:clamp(32px,4.6vw,50px);
-  font-weight:500;
-  line-height:1.18;
+.today-body{padding:20px 20px 22px}
+.today-meta{margin:0 0 10px;font:600 12.5px/1.5 var(--sans);color:var(--ink)}
+.today-meta .sub{font-weight:500;color:var(--muted)}
+.today-title{margin:0 0 11px;font:500 26px/1.15 var(--serif);letter-spacing:-.022em;color:var(--ink);overflow-wrap:anywhere}
+.today-chapo{
+  margin:0 0 16px;font-size:15.5px;line-height:1.55;color:#48515D;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
 }
+.today-cta{font:700 15px/1 var(--sans);color:var(--accent)}
+.ext-line{display:inline-block;margin:13px 4px 0;font:600 13.5px/1.3 var(--sans);color:var(--muted);text-decoration:none}
 
-.manifesto h2 span{color:#E3A8B3}
+/* ---------- CITATION ---------- */
+.quote{margin-top:38px;padding:28px 24px 30px;border-radius:24px;background:var(--accent-soft);text-align:center}
+.quote::before{content:"“";display:block;font:600 48px/.55 var(--serif);color:var(--accent);margin-bottom:10px}
+.quote blockquote{margin:0;font:italic 500 22px/1.4 var(--serif);color:var(--ink);text-wrap:balance}
 
-/* ---------- SECTION GÉNÉRIQUE ---------- */
+/* ---------- LISTE GROUPÉE (méthode) ---------- */
+.group{background:var(--card);border-radius:20px;border:1px solid rgba(11,37,69,.06);overflow:hidden;box-shadow:var(--shadow-soft)}
+.pillar{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:18px;align-content:start}
+.pillar+.pillar{border-top:1px solid var(--hair)}
+.num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font:700 12.5px/1 var(--sans)}
+.pillar h3{margin:2px 0 5px;font:500 20px/1.2 var(--serif);letter-spacing:-.012em;color:var(--ink)}
+.pillar p{margin:0;font-size:15px;line-height:1.55;color:var(--muted)}
 
-.section-kicker{
-  margin:0 0 14px;
-  color:var(--accent);
-  font-size:12.5px;
-  font-weight:700;
-  letter-spacing:.14em;
-  text-transform:uppercase;
+/* ---------- CARROUSEL DES THÉMATIQUES ---------- */
+.carousel{
+  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  margin:0 -20px;padding:2px 20px 16px;scroll-padding-left:20px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
 }
-
-.section-title{
-  margin:0 0 42px;
-  font-family:var(--serif);
-  font-size:clamp(28px,3vw,36px);
-  font-weight:500;
-  color:var(--ink);
-  max-width:20ch;
+.carousel::-webkit-scrollbar{display:none}
+.tcard{
+  flex:0 0 78%;max-width:330px;scroll-snap-align:start;display:flex;flex-direction:column;min-height:244px;
+  background:var(--card);border-radius:22px;padding:22px 20px 20px;text-decoration:none;color:inherit;
+  border:1px solid rgba(11,37,69,.06);box-shadow:var(--shadow-soft);transition:transform .15s ease;
 }
-
-/* ---------- METHOD ---------- */
-
-.method{
-  padding:92px 0 88px;
-  border-bottom:1px solid var(--line);
-}
-
-.pillars{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-}
-
-.pillar{padding:36px 32px 38px 0;}
-.pillar + .pillar{border-left:1px solid var(--line); padding-left:32px;}
-
-.pillar .num{
-  color:var(--accent);
-  font-size:12.5px;
-  font-weight:700;
-  letter-spacing:.1em;
-}
-
-.pillar h3{
-  margin:12px 0 12px;
-  font-family:var(--serif);
-  font-size:24px;
-  font-weight:500;
-  color:var(--ink);
-}
-
-.pillar p{margin:0; color:var(--muted); font-size:15.5px; line-height:1.6;}
-
-/* ---------- À LA UNE ---------- */
-
-.featured-sec{
-  padding:92px 0;
-  background:var(--paper2);
-  border-bottom:1px solid var(--line);
-}
-
-.featured-grid{
-  display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:64px;
-  align-items:center;
-}
-
-.featured-media{
-  aspect-ratio:4/3;
-  overflow:hidden;
-  border-radius:2px;
-  background:var(--line);
-}
-
-.featured-media img{width:100%; height:100%; object-fit:cover;}
-
-.featured-meta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:2px 12px;
-  align-items:baseline;
-  margin:0 0 18px;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-
-.featured-meta .cat{color:var(--accent);}
-.featured-meta .date{color:var(--muted); font-weight:600; letter-spacing:0; text-transform:none;}
-
-.featured-title{
-  margin:0 0 20px;
-  font-family:var(--serif);
-  font-weight:500;
-  color:var(--ink);
-  font-size:clamp(30px,3.4vw,42px);
-  line-height:1.16;
-}
-
-.featured-title a{text-decoration:none; color:inherit;}
-.featured-title a:hover{color:var(--accent);}
-
-.featured-chapo{
-  margin:0 0 26px;
-  max-width:56ch;
-  color:var(--text);
-  font-size:17px;
-  line-height:1.65;
-}
-
-.featured-links{display:flex; gap:22px; flex-wrap:wrap; align-items:center;}
-
-.featured-links a{
-  text-decoration:none;
-  font-size:14px;
-  font-weight:700;
-  color:var(--ink);
-}
-
-.featured-links a.ext{color:var(--muted); font-weight:600;}
-.featured-links a:hover{color:var(--accent);}
-
-/* ---------- THEMES ---------- */
-
-.themes{padding:92px 0;}
-
-.theme-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  border-top:1px solid var(--line);
-}
-
-.theme{
-  display:block;
-  padding:38px 36px 40px 0;
-  text-decoration:none;
-  border-bottom:1px solid var(--line);
-}
-
-.theme:nth-child(even){padding-left:36px; border-left:1px solid var(--line);}
-
-.theme .label{
-  display:block;
-  margin-bottom:12px;
-  color:var(--accent);
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
-
-.theme h3{
-  margin:0 0 12px;
-  font-family:var(--serif);
-  color:var(--ink);
-  font-size:26px;
-  font-weight:500;
-}
-
-.theme p{
-  margin:0 0 18px;
-  max-width:44ch;
-  color:var(--muted);
-  font-size:15.5px;
-  line-height:1.6;
-}
-
-.theme .go{font-weight:700; font-size:14px; color:var(--ink);}
-.theme:hover h3,.theme:hover .go{color:var(--accent);}
+.tcard:active{transform:scale(.975)}
+.tcard .label{font:700 12px/1 var(--sans);letter-spacing:.12em;color:var(--accent)}
+.tcard h3{margin:12px 0 9px;font:500 24px/1.15 var(--serif);letter-spacing:-.018em;color:var(--ink)}
+.tcard p{margin:0 0 auto;font-size:15px;line-height:1.55;color:var(--muted)}
+.tcard .go{margin-top:18px;font:700 14.5px/1 var(--sans);color:var(--accent)}
 
 /* ---------- PUBLICATIONS RÉCENTES ---------- */
+.pub{position:relative;padding:16px 16px 15px}
+.pub+.pub{border-top:1px solid var(--hair)}
+.pub-main{display:grid;grid-template-columns:1fr 88px;gap:14px;text-decoration:none;color:inherit;transition:opacity .12s ease}
+.pub-main:active{opacity:.6}
+.pub-main.no-thumb{grid-template-columns:1fr}
+.pub-meta{font:700 11.5px/1.3 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.pub-title{margin:6px 0 7px;font:500 19px/1.25 var(--serif);letter-spacing:-.012em;color:var(--ink);overflow-wrap:anywhere}
+.pub-sub{font-size:12.5px;line-height:1.5;color:var(--muted)}
+.thumb{width:88px;height:88px;border-radius:14px;object-fit:cover;background:var(--ink)}
+.pub-ext{display:inline-block;margin-top:11px;font:600 13px/1.3 var(--sans);color:var(--muted);text-decoration:none;padding:2px 0}
+.skel{height:14px;border-radius:7px;margin:8px 0;background:linear-gradient(90deg,#EEE8DF 25%,#F7F3EC 50%,#EEE8DF 75%);background-size:200% 100%;animation:shimmer 1.3s linear infinite}
+.skel.w60{width:60%}.skel.w90{width:92%}.skel.w40{width:38%}
+@keyframes shimmer{to{background-position:-200% 0}}
+.empty{padding:20px 18px;margin:0;color:var(--muted);font-size:15px}
 
-.publications{padding:92px 0; background:var(--paper2);}
+/* ---------- PIED DE PAGE ---------- */
+footer.site{margin-top:44px;padding:28px 0 12px;border-top:1px solid var(--hair);font-size:13px;line-height:1.75;color:var(--muted)}
+.foot-name{font:600 18px/1.2 var(--serif);color:var(--ink)}
+footer.site a{text-decoration:none}
+footer.site .sep{display:none}
+.foot-line{margin:6px 0 0}
 
-.publication-list{margin-top:40px; border-top:1px solid var(--line);}
+/* ---------- BARRE D'ONGLETS (façon iOS) ---------- */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:120;display:flex;justify-content:space-around;
+  padding:7px 6px calc(7px + var(--sab));
+  background:rgba(250,247,242,.84);
+  -webkit-backdrop-filter:saturate(1.8) blur(24px);backdrop-filter:saturate(1.8) blur(24px);
+  border-top:1px solid var(--line);
+}
+.tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0 2px;
+  text-decoration:none;color:#8A919B;font:600 10.5px/1.1 var(--sans);letter-spacing:.01em;
+  transition:color .15s ease,transform .12s ease;
+}
+.tab:active{transform:scale(.92)}
+.tab svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tab.active{color:var(--accent)}
+.tab.active svg{stroke-width:2}
 
-.publication{
-  display:grid;
-  grid-template-columns:150px 1fr auto;
-  gap:28px;
-  align-items:start;
-  padding:32px 0;
-  border-bottom:1px solid var(--line);
+/* ---------- FEUILLE DE MENU (bottom sheet) ---------- */
+.sheet-layer{position:fixed;inset:0;z-index:200;visibility:hidden;pointer-events:none;transition:visibility 0s linear .34s}
+.sheet-layer.open{visibility:visible;pointer-events:auto;transition-delay:0s}
+.sheet-backdrop{position:absolute;inset:0;background:rgba(11,37,69,.38);opacity:0;transition:opacity .3s ease}
+.sheet-layer.open .sheet-backdrop{opacity:1}
+.sheet{
+  position:absolute;left:0;right:0;bottom:0;max-height:88vh;overflow-y:auto;
+  background:var(--bg);border-radius:26px 26px 0 0;padding:8px 16px calc(20px + var(--sab));
+  transform:translateY(100%);transition:transform .36s cubic-bezier(.2,.85,.25,1);
+  box-shadow:0 -12px 40px rgba(11,37,69,.18);
+}
+.sheet-layer.open .sheet{transform:none}
+.grabber{width:38px;height:5px;border-radius:3px;background:#CFC8BE;margin:4px auto 10px}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;margin:2px 4px 14px}
+.sheet-title{margin:0;font:500 24px/1.1 var(--serif);letter-spacing:-.02em;color:var(--ink)}
+.sheet-close{width:34px;height:34px;border-radius:50%;border:0;background:#E9E3DA;color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.sheet-close svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.sheet-label{margin:16px 6px 8px;font:700 11.5px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.sheet-group{background:#fff;border-radius:16px;border:1px solid rgba(11,37,69,.06);overflow:hidden}
+.sheet-group a{
+  display:flex;align-items:center;justify-content:space-between;min-height:50px;padding:0 16px;
+  text-decoration:none;color:var(--ink);font:600 16px/1 var(--sans);
+}
+.sheet-group a+a{border-top:1px solid var(--hair)}
+.sheet-group a::after{content:"›";font:400 24px/1 var(--sans);color:#B9B1A6}
+.sheet-group a:active{background:var(--accent-soft)}
+.sheet-foot{margin:18px 6px 0;font:600 11.5px/1.5 var(--sans);letter-spacing:.11em;text-transform:uppercase;color:var(--accent);text-align:center}
+
+/* =====================================================================
+   TABLETTE (≥ 600 px)
+   ===================================================================== */
+@media(min-width:600px){
+  .wrap{padding:0 32px}
+  .chips{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;scroll-padding-left:32px}
+  h1{font-size:clamp(44px,7vw,56px)}
+  .baseline{font-size:19px;max-width:52ch}
+  .cta{display:flex}
+  .btn{padding:0 26px}
+  .carousel{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible;margin:0;padding:0 0 6px}
+  .tcard{max-width:none;flex:initial;min-height:220px}
+  .pub-main{grid-template-columns:1fr 120px}
+  .thumb{width:120px;height:90px}
 }
 
-.publication-meta{color:var(--muted); font-size:12.5px; line-height:1.6;}
-
-.publication h3{
-  margin:0 0 10px;
-  font-family:var(--serif);
-  font-size:23px;
-  font-weight:500;
-  color:var(--ink);
-}
-
-.publication p{margin:0; color:var(--muted); font-size:15px; line-height:1.6;}
-
-.publication-links{display:flex; flex-direction:column; align-items:flex-end; gap:10px;}
-
-.publication a.read{text-decoration:none; font-size:14px; font-weight:700; color:var(--ink); white-space:nowrap;}
-.publication a.read.ext{font-size:12.5px; font-weight:600; color:var(--muted);}
-.publication a.read:hover{color:var(--accent);}
-
-.all-link{
-  display:inline-block;
-  margin-top:32px;
-  color:var(--ink);
-  font-weight:700;
-  font-size:14.5px;
-  text-decoration:none;
-}
-.all-link:hover{color:var(--accent);}
-
-/* ---------- PERSPECTIVE (clôture) ---------- */
-
-.perspective{padding:92px 0;}
-
-.perspective .wrap{max-width:760px; margin:0 auto; text-align:left;}
-
-.perspective p{
-  margin:0;
-  font-family:var(--serif);
-  font-size:20px;
-  line-height:1.65;
-  color:var(--text);
-}
-
-.perspective p strong{color:var(--ink); font-weight:600;}
-
-/* ---------- FOOTER ---------- */
-
-footer.site{border-top:1px solid var(--line); padding:40px 0;}
-
-.footer-inner{
-  display:flex;
-  justify-content:space-between;
-  gap:18px;
-  flex-wrap:wrap;
-  font-size:13.5px;
-  color:var(--muted);
-}
-
-.footer-inner strong{font-family:var(--serif); font-weight:600; color:var(--ink);}
-.footer-inner a{text-decoration:none;}
-.footer-inner a:hover{color:var(--accent);}
-
-/* =====================================================
-   TABLETTE — 768 à 1100px
-===================================================== */
-@media (max-width:1100px){
-  .wrap{padding:0 40px;}
-
-  .masthead{padding:16px 0;}
-
-  .hero{padding:76px 0 60px;}
-  .hero-map{width:420px; height:420px; right:-14%;}
-  h1{font-size:clamp(38px,6vw,50px); max-width:16ch;}
-  .baseline{font-size:19px;}
-
-  .origin-band{padding:52px 0;}
-  .origin-band blockquote{font-size:23px;}
-
-  .manifesto{padding:66px 0 70px;}
-  .manifesto h2{font-size:clamp(30px,5vw,40px);}
-
-  .method,.themes,.publications,.perspective{padding:68px 0;}
-  .featured-sec{padding:68px 0;}
-
-  .section-title{font-size:28px; margin-bottom:34px;}
-
-  .pillars{grid-template-columns:repeat(3,1fr);}
-  .pillar{padding:28px 22px 30px 0;}
-  .pillar + .pillar{padding-left:22px;}
-  .pillar h3{font-size:22px;}
-
-  .featured-grid{grid-template-columns:1fr; gap:32px;}
-  .featured-media{order:-1; aspect-ratio:16/9;}
-  .featured-title{font-size:clamp(28px,4vw,36px);}
-
-  .theme-grid{grid-template-columns:repeat(2,1fr);}
-  .theme{padding:30px 26px 32px 0;}
-  .theme:nth-child(even){padding-left:26px;}
-  .theme h3{font-size:24px;}
-
-  .publication{grid-template-columns:1fr; gap:14px;}
-  .publication-links{flex-direction:row; align-items:center;}
-}
-
-/* =====================================================
-   MOBILE — jusqu'à 767px
-===================================================== */
-@media (max-width:767px){
-  .wrap{padding:0 20px;}
-
-  .brand{width:100%;}
-  .masthead{padding:13px 0;}
-
-  .hero{padding:40px 0 40px;}
-  .hero-map{display:none;}
-  h1{font-size:clamp(34px,9vw,40px); max-width:14ch;}
-  .baseline{font-size:18px; margin-top:20px;}
-  .hero-actions{margin-top:28px;}
-
-  .origin-band{padding:40px 0;}
-  .origin-band blockquote{font-size:20px; line-height:1.5;}
-
-  .manifesto{padding:48px 0 46px;}
-  .manifesto h2{font-size:28px; line-height:1.22;}
-
-  .method{padding:50px 0 44px;}
-  .themes,.publications,.perspective{padding:44px 0;}
-  .featured-sec{padding:46px 0;}
-
-  .section-title{font-size:25px; margin-bottom:26px;}
-
-  .pillars{grid-template-columns:1fr;}
-  .pillar{padding:24px 0;}
-  .pillar + .pillar{border-left:0; border-top:1px solid var(--line); padding-left:0;}
-  .pillar h3{font-size:21px;}
-
-  .featured-title{font-size:clamp(25px,7vw,30px);}
-  .featured-chapo{font-size:16px;}
-
-  .theme-grid{grid-template-columns:1fr;}
-  .theme{padding:24px 0 26px;}
-  .theme:nth-child(even){padding-left:0; border-left:0;}
-  .theme h3{font-size:22px;}
-
-  .publication h3{font-size:20px;}
-
-  .perspective p{font-size:18px;}
+/* =====================================================================
+   ORDINATEUR (≥ 900 px) : pas de barre d'onglets, navigation en haut
+   ===================================================================== */
+@media(min-width:900px){
+  body{padding-bottom:0}
+  html{scroll-padding-top:88px}
+  .tabbar,.menu-btn,.sheet-layer{display:none}
+  .bar-inner{height:76px}
+  .brand-name{font-size:21px}
+  nav.main{display:flex;align-items:center;gap:26px}
+  nav.main a{position:relative;padding:8px 0;text-decoration:none;font:600 14.5px/1 var(--sans);color:var(--ink)}
+  nav.main a::after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:1.5px;background:var(--accent);transition:right .22s ease}
+  nav.main a:hover{color:var(--accent)}
+  nav.main a:hover::after{right:0}
+  .hero{padding:84px 0 12px}
+  .hero-map{right:-40px;top:0;width:560px;height:450px;opacity:.7}
+  h1{font-size:clamp(54px,5.4vw,66px);max-width:15ch}
+  .baseline{font-size:21px;margin-top:24px}
+  .cta{margin-top:32px}
+  .chips{flex-wrap:wrap;overflow:visible;margin:28px 0 0;padding:0}
+  .sec{padding:64px 0 4px}
+  .sec-title{font-size:34px}
+  .today{display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch}
+  .today-media{aspect-ratio:auto;min-height:400px}
+  .today-body{padding:44px 44px 40px;align-self:center}
+  .today-title{font-size:36px}
+  .today-chapo{font-size:16.5px;-webkit-line-clamp:5}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr)}
+  .pillar{grid-template-columns:1fr;gap:10px;padding:30px 28px}
+  .pillar+.pillar{border-top:0;border-left:1px solid var(--hair)}
+  .carousel{grid-template-columns:repeat(4,1fr);gap:16px}
+  .tcard{min-height:260px}
+  .pub{padding:22px 26px}
+  .pub-main{grid-template-columns:1fr 168px;gap:26px}
+  .thumb{width:168px;height:112px;border-radius:16px}
+  .pub-title{font-size:23px}
+  footer.site{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-top:70px;padding:34px 0 40px}
+  .foot-line{margin:0}
 }
 </style>
 </head>
 
 <body>
 
-<header class="site">
-  <div class="wrap masthead">
-
-    <a class="brand" href="/">Godefroid Dika Liba</a>
+<header class="app-bar" id="appBar">
+  <div class="wrap bar-inner">
+    <a class="brand" href="/" aria-label="Accueil — Godefroid Dika Liba">
+      <span class="brand-name">Godefroid Dika Liba</span>
+      <span class="brand-mark" aria-hidden="true"></span>
+    </a>
 
     <nav class="main" aria-label="Navigation principale">
       <a href="reflexions.html">Réflexions</a>
@@ -669,344 +342,337 @@ footer.site{border-top:1px solid var(--line); padding:40px 0;}
       <a href="a-propos.html">À propos</a>
     </nav>
 
-    <details class="mobile-nav">
-      <summary>Menu</summary>
-      <div class="panel">
-        <a href="reflexions.html">Réflexions</a>
-        <a href="reflexions.html?cat=nationalite">Nationalité</a>
-        <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
-        <a href="reflexions.html?cat=diaspora">Diaspora</a>
-        <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
-        <a href="a-propos.html">À propos</a>
-      </div>
-    </details>
-
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sheet">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14M5 15h14"/></svg>
+    </button>
   </div>
 </header>
 
 <main>
 
-<section class="hero">
-  <svg class="hero-map" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
-    <path class="alt" d="M40 420 C 140 460, 210 380, 300 400 S 460 320, 560 360"/>
-    <path d="M60 180 C 160 140, 220 220, 320 190 S 470 90, 550 150"/>
-    <path class="alt" d="M20 300 C 140 280, 240 340, 340 300 S 480 250, 580 290"/>
-  </svg>
-  <div class="wrap">
-    <div class="hero-inner">
-
+  <section class="hero">
+    <svg class="hero-map" viewBox="0 0 600 500" aria-hidden="true" focusable="false">
+      <path class="alt" d="M20 392 C120 418 188 344 278 367 S447 293 578 329"/>
+      <path d="M36 133 C155 84 224 188 323 150 S468 78 580 130"/>
+      <path class="alt" d="M6 259 C132 235 236 309 351 261 S488 213 596 247"/>
+      <path d="M148 15 C104 119 144 179 222 242 S333 365 442 484"/>
+      <circle cx="323" cy="150" r="4"/><circle cx="351" cy="261" r="4"/><circle cx="442" cy="484" r="4"/>
+    </svg>
+    <div class="wrap">
       <p class="kicker">Nationalité · Citoyenneté · Afrique</p>
-
       <h1>Revenir au droit pour mieux comprendre nos appartenances.</h1>
-
       <p class="baseline">
-        Un espace personnel de réflexion sur la nationalité,
-        la citoyenneté et les transformations du lien d’appartenance.
+        Un blog juridique personnel consacré aux questions de nationalité,
+        de citoyenneté et de diaspora, à partir de la République démocratique
+        du Congo et dans une perspective africaine et comparative.
       </p>
-
-      <div class="hero-actions">
+      <div class="cta">
         <a class="btn btn-primary" href="reflexions.html">Lire les réflexions</a>
         <a class="btn btn-secondary" href="a-propos.html">Découvrir la démarche</a>
       </div>
 
+      <div class="chips" aria-label="Accès rapide aux thématiques">
+        <a class="chip" href="reflexions.html?cat=nationalite">Nationalité</a>
+        <a class="chip" href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+        <a class="chip" href="reflexions.html?cat=diaspora">Diaspora</a>
+        <a class="chip" href="reflexions.html?cat=regards">Regards d’Afrique</a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="origin-band reveal">
-  <div class="wrap">
-    <blockquote>
-      « La République démocratique du Congo constitue mon point de départ.
-      L'Afrique est mon horizon. »
-    </blockquote>
-  </div>
-</section>
-
-<section class="manifesto reveal">
-  <div class="wrap">
-    <p class="small">Le fil conducteur</p>
-    <h2>
-      Une question de droit.<br>
-      <span>Une question d’appartenance.</span>
-    </h2>
-  </div>
-</section>
-
-<section class="method reveal">
-  <div class="wrap">
-
-    <p class="section-kicker">Méthode</p>
-    <h2 class="section-title">Comparer pour comprendre.</h2>
-
-    <div class="pillars">
-
-      <article class="pillar">
-        <span class="num">01</span>
-        <h3>Le droit</h3>
-        <p>
-          Revenir aux textes, aux concepts, aux institutions et aux catégories
-          juridiques avant de tirer des conclusions.
-        </p>
-      </article>
-
-      <article class="pillar">
-        <span class="num">02</span>
-        <h3>La société</h3>
-        <p>
-          Observer la manière dont le droit rencontre l’histoire,
-          les migrations, les identités et les réalités sociales.
-        </p>
-      </article>
-
-      <article class="pillar">
-        <span class="num">03</span>
-        <h3>La comparaison</h3>
-        <p>
-          Mettre en regard les expériences congolaises, africaines
-          et internationales pour mieux comprendre les choix juridiques.
-        </p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section class="featured-sec reveal" id="a-la-une" hidden>
-  <div class="wrap">
-    <p class="section-kicker">À la une</p>
-    <div class="featured-grid">
-      <div>
-        <p class="featured-meta">
-          <span class="cat" id="feat-cat"></span>
-          <span class="date" id="feat-date"></span>
-        </p>
-        <h3 class="featured-title"><a id="feat-link" href="#"></a></h3>
-        <p class="featured-chapo" id="feat-chapo"></p>
-        <div class="featured-links">
-          <a class="go" id="feat-read" href="#">Lire →</a>
-          <a class="ext" id="feat-ext" href="#" target="_blank" rel="noopener" hidden>Publication originale ↗</a>
+  <section class="sec reveal" id="a-la-une" hidden>
+    <div class="wrap">
+      <div class="sec-head"><h2 class="sec-title">À la une</h2></div>
+      <a class="today" id="feat-card" href="#">
+        <div class="today-media" id="feat-media">
+          <img id="feat-img" src="" alt="">
+          <span class="pill" id="feat-cat"></span>
         </div>
+        <div class="today-body">
+          <p class="today-meta" id="feat-date"></p>
+          <h3 class="today-title" id="feat-title"></h3>
+          <p class="today-chapo" id="feat-chapo"></p>
+          <span class="today-cta">Lire →</span>
+        </div>
+      </a>
+      <a class="ext-line" id="feat-ext" href="#" target="_blank" rel="noopener" hidden>Publication originale ↗</a>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="wrap">
+      <div class="quote">
+        <blockquote>Le droit comme horizon commun.</blockquote>
       </div>
-      <div class="featured-media" id="feat-media" hidden>
-        <img id="feat-img" src="" alt="">
+    </div>
+  </section>
+
+  <section class="sec reveal">
+    <div class="wrap">
+      <p class="sec-kicker">Méthode</p>
+      <div class="sec-head"><h2 class="sec-title">Comparer pour comprendre.</h2></div>
+      <div class="group pillars">
+        <article class="pillar">
+          <span class="num">01</span>
+          <div><h3>Le droit</h3><p>Revenir aux textes, aux concepts, aux institutions et aux catégories juridiques avant de tirer des conclusions.</p></div>
+        </article>
+        <article class="pillar">
+          <span class="num">02</span>
+          <div><h3>La société</h3><p>Observer la manière dont le droit rencontre l’histoire, les migrations, les identités et les réalités sociales.</p></div>
+        </article>
+        <article class="pillar">
+          <span class="num">03</span>
+          <div><h3>La comparaison</h3><p>Mettre en regard les expériences congolaises, africaines et internationales pour mieux comprendre les choix juridiques.</p></div>
+        </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="themes reveal">
-  <div class="wrap">
-
-    <p class="section-kicker">Thématiques</p>
-    <h2 class="section-title">Quatre portes d’entrée.</h2>
-
-    <div class="theme-grid">
-
-      <a class="theme" href="reflexions.html?cat=nationalite">
-        <span class="label">01</span>
-        <h3>Nationalité</h3>
-        <p>
-          Acquisition, attribution, perte, pluralité des nationalités
-          et construction juridique de l’appartenance nationale.
-        </p>
-        <span class="go">Explorer →</span>
-      </a>
-
-      <a class="theme" href="reflexions.html?cat=citoyennete">
-        <span class="label">02</span>
-        <h3>Citoyenneté</h3>
-        <p>
-          Droits, participation, statut politique et rapports entre
-          appartenance juridique et communauté civique.
-        </p>
-        <span class="go">Explorer →</span>
-      </a>
-
-      <a class="theme" href="reflexions.html?cat=diaspora">
-        <span class="label">03</span>
-        <h3>Diaspora</h3>
-        <p>
-          Mobilité, double nationalité, droits des nationaux établis
-          à l’étranger et transformations du lien avec l’État d’origine.
-        </p>
-        <span class="go">Explorer →</span>
-      </a>
-
-      <a class="theme" href="reflexions.html?cat=regards">
-        <span class="label">04</span>
-        <h3>Regards d’Afrique</h3>
-        <p>
-          Mettre les expériences africaines en perspective afin de dépasser
-          les lectures strictement nationales.
-        </p>
-        <span class="go">Explorer →</span>
-      </a>
-
+  <section class="sec reveal" id="themes">
+    <div class="wrap">
+      <p class="sec-kicker">Thématiques</p>
+      <div class="sec-head"><h2 class="sec-title">Quatre portes d’entrée.</h2></div>
+      <div class="carousel">
+        <a class="tcard" href="reflexions.html?cat=nationalite">
+          <span class="label">01</span><h3>Nationalité</h3>
+          <p>Acquisition, attribution, perte, pluralité des nationalités et construction juridique de l’appartenance nationale.</p>
+          <span class="go">Explorer →</span>
+        </a>
+        <a class="tcard" href="reflexions.html?cat=citoyennete">
+          <span class="label">02</span><h3>Citoyenneté</h3>
+          <p>Droits, participation, statut politique et rapports entre appartenance juridique et communauté civique.</p>
+          <span class="go">Explorer →</span>
+        </a>
+        <a class="tcard" href="reflexions.html?cat=diaspora">
+          <span class="label">03</span><h3>Diaspora</h3>
+          <p>Mobilité, double nationalité, droits des nationaux établis à l’étranger et transformations du lien avec l’État d’origine.</p>
+          <span class="go">Explorer →</span>
+        </a>
+        <a class="tcard" href="reflexions.html?cat=regards">
+          <span class="label">04</span><h3>Regards d’Afrique</h3>
+          <p>Mettre les expériences africaines en perspective afin de dépasser les lectures strictement nationales.</p>
+          <span class="go">Explorer →</span>
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="publications reveal">
-  <div class="wrap">
-
-    <p class="section-kicker">Publications</p>
-    <h2 class="section-title">Publications récentes</h2>
-
-    <div id="publication-list" class="publication-list">
-      <p>Chargement…</p>
+  <section class="sec reveal">
+    <div class="wrap">
+      <p class="sec-kicker">Publications</p>
+      <div class="sec-head">
+        <h2 class="sec-title">Publications récentes</h2>
+        <a class="see-all" href="reflexions.html">Voir tout ›</a>
+      </div>
+      <div class="group" id="publication-list" aria-live="polite">
+        <div class="pub"><div class="skel w40"></div><div class="skel w90"></div><div class="skel w60"></div></div>
+        <div class="pub"><div class="skel w40"></div><div class="skel w90"></div><div class="skel w60"></div></div>
+      </div>
     </div>
-
-    <a class="all-link" href="reflexions.html">Voir toutes les réflexions →</a>
-
-  </div>
-</section>
-
-<section class="perspective reveal">
-  <div class="wrap">
-    <p>
-      Ce site suit dans le temps l’évolution du droit de la nationalité et de la citoyenneté
-      en République démocratique du Congo, les réformes relatives à la diaspora et,
-      progressivement, <strong>d’autres expériences africaines et internationales</strong>
-      permettant de mieux comprendre, par comparaison, ce qui fait de nous les membres d’une nation.
-    </p>
-  </div>
-</section>
+  </section>
 
 </main>
 
 <footer class="site">
-  <div class="wrap footer-inner">
-
-    <span><strong>Godefroid Dika Liba</strong></span>
-
-    <span>
-      <a href="mailto:contactgodefroid@gmail.com">
-        contactgodefroid@gmail.com
-      </a>
-    </span>
-
-    <span>
-      © 2026 ·
-      <a href="mentions-legales.html">Mentions légales</a>
-    </span>
-
+  <div class="wrap">
+    <div class="foot-name">Godefroid Dika Liba</div>
+    <p class="foot-line"><a href="mailto:contactgodefroid@gmail.com">contactgodefroid@gmail.com</a></p>
+    <p class="foot-line">© 2026 · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Politique de confidentialité</a></p>
   </div>
 </footer>
+
+<nav class="tabbar" aria-label="Navigation mobile">
+  <a class="tab active" id="tabHome" href="/">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.8 12 4.2l8 6.6V19a1 1 0 0 1-1 1h-4.2v-5.6H9.2V20H5a1 1 0 0 1-1-1z"/></svg>
+    <span>Accueil</span>
+  </a>
+  <a class="tab" href="reflexions.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.2"/><path d="M8.6 8.2h6.8M8.6 12h6.8M8.6 15.8h4.2"/></svg>
+    <span>Lire</span>
+  </a>
+  <a class="tab" id="tabExplore" href="#themes">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.4 8.6-2 4.8-4.8 2 2-4.8z"/></svg>
+    <span>Explorer</span>
+  </a>
+  <a class="tab" href="a-propos.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.2" r="3.4"/><path d="M5.2 20c.5-4 2.8-6 6.8-6s6.3 2 6.8 6"/></svg>
+    <span>À propos</span>
+  </a>
+</nav>
+
+<div class="sheet-layer" id="sheetLayer">
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="grabber" aria-hidden="true"></div>
+    <div class="sheet-head">
+      <h2 class="sheet-title">Menu</h2>
+      <button class="sheet-close" id="sheetClose" type="button" aria-label="Fermer le menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-group">
+      <a href="reflexions.html">Réflexions</a>
+      <a href="a-propos.html">À propos</a>
+    </div>
+    <p class="sheet-label">Thématiques</p>
+    <div class="sheet-group">
+      <a href="reflexions.html?cat=nationalite">Nationalité</a>
+      <a href="reflexions.html?cat=citoyennete">Citoyenneté</a>
+      <a href="reflexions.html?cat=diaspora">Diaspora</a>
+      <a href="reflexions.html?cat=regards">Regards d'Afrique</a>
+    </div>
+    <p class="sheet-foot">Nationalité · Citoyenneté · Afrique</p>
+  </div>
+</div>
 
 <script>
 (function(){
 
-  function esc(value){
-    return String(value || '')
-      .replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;')
-      .replace(/'/g,'&#039;');
+  var BASE = '';
+
+  function esc(v){
+    return String(v == null ? '' : v)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
   }
 
-  fetch('data/articles.json')
-    .then(function(response){
-      if(!response.ok){
-        throw new Error('Impossible de charger les articles');
-      }
-      return response.json();
-    })
-    .then(function(data){
+  /* ---------- outils : tri par date française, temps de lecture ---------- */
+  var MOIS = ['janvier','fevrier','mars','avril','mai','juin','juillet','aout','septembre','octobre','novembre','decembre'];
+  function fold(s){ return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
+  function frTime(s){
+    var m = fold(s).match(/(\d{1,2})\s+([a-z]{3,})\.?\s+(\d{4})/);
+    if(m){ for(var i = 0; i < MOIS.length; i++){ if(MOIS[i].indexOf(m[2]) === 0){ return new Date(+m[3], i, +m[1]).getTime(); } } }
+    var t = Date.parse(s); return isNaN(t) ? 0 : t;
+  }
+  function sortDesc(list){
+    return list.map(function(a, i){ return {a:a, i:i}; })
+      .sort(function(x, y){ var d = frTime(y.a.date) - frTime(x.a.date); return d !== 0 ? d : x.i - y.i; })
+      .map(function(o){ return o.a; });
+  }
+  function readMin(a){
+    var t = String((a && a.body) || '');
+    var plain = !a || a.format === 'plain';
+    t = t.split(/\n\s*\n/).filter(function(p){
+      p = p.trim();
+      if(/^\\?\[\d+\\?\]\s/.test(p)){ return false; }
+      if(plain && /^\d+\.\s/.test(p)){ return false; }
+      return true;
+    }).join('\n\n');
+    if(!plain){ t = t.replace(/!\[[^\]]*\]\([^)]*\)/g,' ').replace(/\[([^\]]+)\]\([^)]*\)/g,'$1').replace(/[*_`>#]+/g,' '); }
+    t = t.replace(/https?:\/\/\S+/g,' ');
+    var w = (t.match(/[\p{L}\p{N}][\p{L}\p{N}'’\-]*/gu) || []).length;
+    return w < 40 ? 0 : Math.max(1, Math.round(w / 220));
+  }
+  function readLabel(a){ var m = readMin(a); return m ? m + ' min de lecture' : ''; }
+  function articleUrl(a){ return BASE + 'article.html?slug=' + encodeURIComponent(a.slug); }
 
-      var all = data.articles || [];
-
-      /* ---------- À la une ---------- */
-      var featured = all.find(function(a){ return a.featured; });
-      if(featured){
-        var sec = document.getElementById('a-la-une');
-        document.getElementById('feat-cat').textContent = featured.category || '';
-        var typeLabel = [featured.type, featured.source].filter(Boolean).join(' · ');
-        document.getElementById('feat-date').textContent = [featured.date, typeLabel].filter(Boolean).join(' · ');
-        var link = 'article.html?slug=' + encodeURIComponent(featured.slug);
-        var titleLink = document.getElementById('feat-link');
-        titleLink.href = link;
-        titleLink.textContent = featured.title;
-        document.getElementById('feat-chapo').textContent = featured.summary || '';
-        document.getElementById('feat-read').href = link;
-        if(featured.sourceUrl){
-          var ext = document.getElementById('feat-ext');
-          ext.href = featured.sourceUrl;
-          ext.hidden = false;
-        }
-        if(featured.image){
-          var media = document.getElementById('feat-media');
-          document.getElementById('feat-img').src = featured.image;
-          media.hidden = false;
-        }
-        sec.hidden = false;
-      }
-
-      /* ---------- Publications récentes (hors À la une) ---------- */
-      var articles = all.filter(function(a){ return !a.featured; }).slice(0,4);
-      if(!articles.length){ articles = all.slice(0,2); }
-      var container = document.getElementById('publication-list');
-
-      if(!articles.length){
-        container.innerHTML = '<p>Aucune publication disponible pour le moment.</p>';
-        return;
-      }
-
-      var html = '';
-
-      articles.forEach(function(article){
-
-        html += '<article class="publication">';
-
-        html += '<div class="publication-meta">';
-        html += esc(article.date || '');
-        if(article.type){ html += '<br>' + esc(article.type); }
-        if(article.source){ html += '<br>' + esc(article.source); }
-        html += '</div>';
-
-        html += '<div>';
-        html += '<h3>' + esc(article.title) + '</h3>';
-        html += '<p>' + esc(article.summary || '') + '</p>';
-        html += '</div>';
-
-        html += '<div class="publication-links">';
-        html += '<a class="read" href="article.html?slug=' + encodeURIComponent(article.slug) + '">Lire →</a>';
-        if(article.sourceUrl){
-          html += '<a class="read ext" href="' + esc(article.sourceUrl) + '" target="_blank" rel="noopener">Publication originale ↗</a>';
-        }
-        html += '</div>';
-
-        html += '</article>';
-      });
-
-      container.innerHTML = html;
-    })
-    .catch(function(){
-      document.getElementById('publication-list').innerHTML =
-        '<p>Les publications sont momentanément indisponibles.</p>';
+  /*LOAD_DATA_START*/
+  function loadData(){
+    return fetch('data/articles.json').then(function(r){
+      if(!r.ok){ throw new Error('données indisponibles'); }
+      return r.json();
     });
+  }
+  /*LOAD_DATA_END*/
 
-  /* ---------- apparition progressive des sections ---------- */
+  loadData().then(function(data){
+    var all = sortDesc(data.articles || []);
+
+    /* ---------- À la une ---------- */
+    var featured = all.find(function(a){ return a.featured; });
+    if(featured){
+      var url = articleUrl(featured);
+      document.getElementById('feat-card').href = url;
+      document.getElementById('feat-cat').textContent = featured.category || '';
+      document.getElementById('feat-cat').hidden = !featured.category;
+      var line1 = [featured.date, readLabel(featured)].filter(Boolean).join(' · ');
+      var line2 = [featured.type, featured.source].filter(Boolean).join(' · ');
+      document.getElementById('feat-date').innerHTML = esc(line1) + (line2 ? '<br><span class="sub">' + esc(line2) + '</span>' : '');
+      document.getElementById('feat-title').textContent = featured.title;
+      document.getElementById('feat-chapo').textContent = featured.summary || '';
+      if(featured.image){ document.getElementById('feat-img').src = featured.image; }
+      else { document.getElementById('feat-img').hidden = true; }
+      if(featured.sourceUrl){
+        var ext = document.getElementById('feat-ext');
+        ext.href = featured.sourceUrl; ext.hidden = false;
+      }
+      document.getElementById('a-la-une').hidden = false;
+    }
+
+    /* ---------- Publications récentes (hors À la une) ---------- */
+    var list = all.filter(function(a){ return !a.featured; }).slice(0, 4);
+    if(!list.length){ list = all.slice(0, 2); }
+    var box = document.getElementById('publication-list');
+    if(!list.length){ box.innerHTML = '<p class="empty">Aucune publication disponible pour le moment.</p>'; return; }
+
+    box.innerHTML = list.map(function(a){
+      var rl = readLabel(a);
+      var sub = [a.type, a.source, rl].filter(Boolean).join(' · ');
+      var thumb = a.image ? '<img class="thumb" src="' + esc(a.image) + '" alt="" loading="lazy">' : '';
+      return '<article class="pub">' +
+        '<a class="pub-main' + (a.image ? '' : ' no-thumb') + '" href="' + articleUrl(a) + '">' +
+          '<div>' +
+            '<div class="pub-meta">' + esc([a.category, a.date].filter(Boolean).join(' · ')) + '</div>' +
+            '<h3 class="pub-title">' + esc(a.title) + '</h3>' +
+            '<div class="pub-sub">' + esc(sub) + '</div>' +
+          '</div>' + thumb +
+        '</a>' +
+        (a.sourceUrl ? '<a class="pub-ext" href="' + esc(a.sourceUrl) + '" target="_blank" rel="noopener">Publication originale ↗</a>' : '') +
+      '</article>';
+    }).join('');
+  }).catch(function(){
+    document.getElementById('publication-list').innerHTML =
+      '<p class="empty">Les publications sont momentanément indisponibles.</p>';
+  });
+
+  /* ---------- barre supérieure : filet au défilement ---------- */
+  var bar = document.getElementById('appBar');
+  function onScroll(){ bar.classList.toggle('scrolled', (window.scrollY || 0) > 4); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* ---------- onglet actif selon la section visible ---------- */
+  var tabHome = document.getElementById('tabHome'), tabExplore = document.getElementById('tabExplore');
+  var themes = document.getElementById('themes');
+  if('IntersectionObserver' in window && themes){
+    new IntersectionObserver(function(entries){
+      var on = entries[0].isIntersecting;
+      tabExplore.classList.toggle('active', on);
+      tabHome.classList.toggle('active', !on);
+    }, {rootMargin:'-20% 0px -30% 0px'}).observe(themes);
+  }
+
+  /* ---------- feuille de menu ---------- */
+  var layer = document.getElementById('sheetLayer'), btn = document.getElementById('menuBtn');
+  var closeBtn = document.getElementById('sheetClose');
+  function openSheet(){
+    layer.classList.add('open'); btn.setAttribute('aria-expanded','true');
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(function(){ closeBtn.focus(); }, 60);
+  }
+  function closeSheet(){
+    layer.classList.remove('open'); btn.setAttribute('aria-expanded','false');
+    document.documentElement.style.overflow = '';
+    btn.focus();
+  }
+  btn.addEventListener('click', openSheet);
+  closeBtn.addEventListener('click', closeSheet);
+  document.getElementById('sheetBackdrop').addEventListener('click', closeSheet);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && layer.classList.contains('open')){ closeSheet(); } });
+  layer.addEventListener('click', function(e){ if(e.target.closest('.sheet-group a')){ document.documentElement.style.overflow = ''; } });
+
+  /* ---------- apparition progressive (avec filet de sécurité) ---------- */
+  var items = document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-    /* filet de sécurité : le contenu ne doit jamais rester invisible */
-    setTimeout(function(){
-      document.querySelectorAll('.reveal:not(.is-visible)').forEach(function(el){ el.classList.add('is-visible'); });
-    }, 2500);
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('is-visible'); io.unobserve(en.target); } });
+    }, {threshold:.1, rootMargin:'0px 0px -6% 0px'});
+    items.forEach(function(el){ io.observe(el); });
+    setTimeout(function(){ document.querySelectorAll('.reveal:not(.is-visible)').forEach(function(el){ el.classList.add('is-visible'); }); }, 2500);
   } else {
-    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
+    items.forEach(function(el){ el.classList.add('is-visible'); });
   }
 
 })();
 </script>
-
 </body>
 </html>
