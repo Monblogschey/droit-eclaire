@@ -12,7 +12,8 @@
       "image": "/uploads/pexels-aboodi-13966976.jpg",
       "author": "Godefroid Dika Liba, Doctorant en droit international privé.",
       "category": "Nationalité",
-      "featured": true
+      "featured": true,
+      "format": "plain"
     },
     {
       "title": "Le statut juridique de la diaspora congolaise : bilan d’une réforme en cours.",
@@ -26,7 +27,8 @@
       "image": "/uploads/pexels-clickerhappy-227690.jpg",
       "author": "Godefroid Dika Liba, Doctorant en droit international privé.",
       "category": "Diaspora",
-      "featured": false
+      "featured": false,
+      "format": "plain"
     }
   ]
 }

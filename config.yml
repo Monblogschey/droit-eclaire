@@ -1,0 +1,43 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: "fr"
+
+media_folder: "uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "articles"
+    label: "Publications"
+    files:
+      - name: "articles"
+        label: "Toutes les publications"
+        file: "data/articles.json"
+        fields:
+          - name: "articles"
+            label: "Publications"
+            widget: "list"
+            summary: "{{title}} — {{date}}"
+            fields:
+              - { name: "title", label: "TITRE de la publication", widget: "string", hint: "Le titre principal, affiché en grand en haut de la publication." }
+              - { name: "slug", label: "Identifiant URL (minuscules, sans espace ni accent, ex : mon-article)", widget: "string" }
+              - { name: "date", label: "Date", widget: "string", hint: "Écrire la date en toutes lettres, par exemple : 12 octobre 2026" }
+              - { name: "category", label: "Thématique", widget: "select", options: ["Nationalité", "Citoyenneté", "Diaspora", "Regards d'Afrique"], default: "Nationalité" }
+              - { name: "type", label: "Type de publication", widget: "select", options: ["Réflexion", "Analyse", "Publication antérieure"], default: "Réflexion" }
+              - { name: "source", label: "Source (uniquement pour une publication antérieure)", widget: "string", required: false, hint: "Exemple : Village de la Justice" }
+              - { name: "sourceUrl", label: "Adresse de la publication d'origine", widget: "string", required: false, hint: "Lien complet, commençant par https://" }
+              - { name: "author", label: "Signature auteur", widget: "string", default: "Godefroid Dika Liba, Doctorant en droit international privé" }
+              - { name: "summary", label: "CHAPEAU (introduction courte, 1 à 3 phrases)", widget: "text" }
+              - { name: "image", label: "Image principale", widget: "image", required: false }
+              - { name: "imageCaption", label: "Légende de l'image (facultatif)", widget: "string", required: false }
+              - { name: "featured", label: "À la une (une seule publication à la fois)", widget: "boolean", default: false, required: false, hint: "Si vous cochez cette case, décochez l'ancienne publication à la une." }
+              - { name: "format", label: "Format", widget: "hidden", default: "markdown" }
+              - name: "body"
+                label: "TEXTE de la publication"
+                widget: "markdown"
+                hint: "Bouton « H » (Titres) : choisissez Titre 2 (grand intertitre) ou Titre 3 (petit intertitre). Sur le site, les intertitres s'affichent en police à empattements, le texte courant reste en paragraphe simple. Dans l'aperçu à droite, la publication que vous venez d'ajouter est la dernière de la liste."
+                modes: ["rich_text"]
+                buttons: ["heading-two", "heading-three", "bold", "italic", "link", "quote", "bulleted-list", "numbered-list"]
+                editor_components: []
+              - { name: "keywords", label: "Mots-clés", widget: "keywords", required: false, hint: "Une fois le texte rédigé, cliquez sur « Proposer des mots-clés à partir du texte », puis gardez ceux qui conviennent. Vous pouvez aussi les saisir ou les modifier à la main, séparés par des virgules." }
